@@ -2,7 +2,7 @@ function storeBlinkStat(user_id,eye_open_time,eye_close_time){
     console.log("Storing Blink");
     // Creating a XHR object
     let xhr = new XMLHttpRequest();
-    let url = "http://localhost:3001/digital_eyes/storeBlinkStat";
+    let url = "http://wkwin9558419.global.publicisgroupe.net:3001/digital_eyes/storeBlinkStat";
 
     // open a connection
     xhr.open("POST", url, true);
@@ -32,7 +32,7 @@ function listBlinkStat(liveFeed){
     console.log("Storing Blink");
     // Creating a XHR object
     let xhr = new XMLHttpRequest();
-    let url = "http://localhost:3001/digital_eyes/blinkstat";
+    let url = "http://wkwin9558419.global.publicisgroupe.net:3001/digital_eyes/blinkstat";
 
     // open a connection
     xhr.open("GET", url, true);

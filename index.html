@@ -14,20 +14,31 @@
     <script src="timer.js"></script>
     <script src="storedigitaleyes.js" charset="utf-8"></script>
     <script src="digitalEyesVideo.js"></script>
-    <div>
-      <button id="openEye">Capture Open Eye  </button>
-      <span id="amountOfOpenImages">0</span> Open Eye Images<br />
-      <button id="closeEye">Capture Close Eye</button>
-      <span id="amountOfCloseImages">0</span> Close Eye Images<br />
-      <button id="noEye">Capture Close Eye</button>
-      <span id="amountOfNoEyeImages">0</span> No Eye Detetected Images<br />
-    </div>
-    <div id="reportButtons">
-      <button id="train">Train</button><span id="loss"></span>
-      <button id="showReport" onclick="listBlinkStat()">Show Blink Report</button>
-      <button id="liveReport" onclick="liveFeed=setInterval(function(){listBlinkStat(true);}, 1000)">Live Blink Report</button>
-      <button id="hideReport" onclick="hideyChart();clearInterval(liveFeed)">Hide Blink Report</button>
-    </div>
+    <table rules="all" cellspacing="20" class="table table-bordered">
+      <tr></tr>
+        <td><button id="openEye">Capture Open Eye  </button></td>
+        <td><span id="amountOfOpenImages">0</span> Open Eye Images<br /></td>
+      <tr>
+        <td><button id="closeEye">Capture Close Eye</button></td>
+        <td><span id="amountOfCloseImages">0</span> Close Eye Images<br /></td>
+      </tr>
+      <tr>
+        <td><button id="noEye">Capture Close Eye</button></td>
+        <td><span id="amountOfNoEyeImages">0</span> No Eye Detetected Images<br /></td>
+      </tr>
+      <tr>
+        <td>Button Section</td>
+        <td>
+          <div id="reportButtons">
+            <button id="train">Train</button><span id="loss"></span>
+            <button id="showReport" onclick="listBlinkStat()">Show Blink Report</button>
+            <button id="liveReport" onclick="liveFeed=setInterval(function(){listBlinkStat(true);}, 1000)">Live Blink Report</button>
+            <button id="hideReport" onclick="hideyChart();clearInterval(liveFeed)">Hide Blink Report</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
     <div id="reportContainer">
       <canvas id="myChart" style="height:20vh; width:40vw">
       <script src="reporting.js" style charset="utf-8"></script>
