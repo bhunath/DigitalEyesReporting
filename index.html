@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>DigitalEyesReporting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <script src="timer.js"></script>
+    <script src="storedigitaleyes.js" charset="utf-8"></script>
+    <script src="digitalEyesVideo.js"></script>
+    <div>
+      <button id="openEye">Capture Open Eye  </button>
+      <span id="amountOfOpenImages">0</span> Open Eye Images<br />
+      <button id="closeEye">Capture Close Eye</button>
+      <span id="amountOfCloseImages">0</span> Close Eye Images<br />
+      <button id="noEye">Capture Close Eye</button>
+      <span id="amountOfNoEyeImages">0</span> No Eye Detetected Images<br />
+    </div>
+    <div id="reportButtons">
+      <button id="train">Train</button><span id="loss"></span>
+      <button id="showReport" onclick="listBlinkStat()">Show Blink Report</button>
+      <button id="liveReport" onclick="liveFeed=setInterval(function(){listBlinkStat(true);}, 1000)">Live Blink Report</button>
+      <button id="hideReport" onclick="hideyChart();clearInterval(liveFeed)">Hide Blink Report</button>
+    </div>
+    <div id="reportContainer">
+      <canvas id="myChart" style="height:20vh; width:40vw">
+      <script src="reporting.js" style charset="utf-8"></script>
+    </div>
+    <<script type="text/javascript">
+      hideyChart();
+    </script>
+  </body>
+</html>
