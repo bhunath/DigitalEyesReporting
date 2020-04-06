@@ -44,13 +44,27 @@ function sendImagetoServer(imageData){
   xhr.send(formData);
 }
 
+function hideWebCam(){
+  result = document.getElementById('results');
+  result.style.display='NONE';
+  console.log(result);
+}
+
+function showWebCam(){
+  result = document.getElementById('results');
+  result.style.display='block';
+  console.log(result);
+}
+
 function monitorBlink(){
   var monitorBlinkButton = document.getElementById('monitorBlink');
   var monitorBlinkLabel = monitorBlinkButton.innerHTML;
   if('Capture Blink' == monitorBlinkLabel){
+    showWebCam();
     monitorBlinkButton.innerHTML = 'Stop Monitor';
     take_snapshot_interval = setInterval(take_snapshot,100);
   }else if('Stop Monitor' == monitorBlinkLabel){
+    hideWebCam();
     console.log('Stop is Called',take_snapshot_interval)
     monitorBlinkButton.innerHTML = 'Capture Blink';
     clearInterval(take_snapshot_interval);
