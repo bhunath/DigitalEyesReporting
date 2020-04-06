@@ -1,4 +1,4 @@
-var option = {
+var opetionEyeState = {
         color:function(context){
           console.log('Color');
         },
@@ -23,11 +23,9 @@ var option = {
     };
 var digitalEyesChart;
 function displayChart(label,datasets){
-    shopowChart();
+    showChart();
     var myChart = document.getElementById('myChart');
     var ctx = myChart.getContext('2d');
-    var d = {"labels":label,"datasets":datasets};
-    var dataSet = JSON.stringify(d);
     var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
     console.log("Data",datasets);
     //console.log("List Blink Stat",lbs);
@@ -37,7 +35,7 @@ function displayChart(label,datasets){
           labels: label,
           datasets: datasets
         },
-        options: option
+        options: opetionEyeState
     });
     console.log("charting is done");
 }
@@ -49,7 +47,7 @@ function hideyChart(){
   reportContainer.style.display='NONE';
 }
 
-function shopowChart(){
+function showChart(){
   reportContainer = document.getElementById('reportContainer');
   myChart = document.getElementById('myChart');
   myChart.style.display='block';
@@ -66,4 +64,32 @@ function addData( label, data) {
     }else{
       displayChart(label,data);
     }
+}
+
+var optionBar =  {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+
+function displayBlinkReportPerMinuteChart(label,datasets){
+  showChart();
+  var myChart = document.getElementById('myChart');
+  var ctx = myChart.getContext('2d');
+  var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data",datasets);
+  //console.log("List Blink Stat",lbs);
+  digitalEyesChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: label,
+        datasets: datasets
+      },
+      options: optionBar
+  });
+  console.log("charting is done");
 }

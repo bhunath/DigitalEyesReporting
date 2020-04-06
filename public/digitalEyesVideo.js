@@ -106,19 +106,34 @@ function setupButtons() {
     select('#amountOfNoEyeImages').html(++noEyeImages);
   });
 
-  // Train Button
-  train = select('#train');
-  train.mousePressed(function() {
-    classifier.train(function(lossValue) {
-      if (lossValue) {
-        loss = lossValue;
-        select('#loss').html('Loss: ' + loss);
-      } else {
-        select('#loss').html('Done Training! Final Loss: ' + loss);
-        console.log('Start Application');
-        classifier.classify(gotResult);
-      }
-    });
+}
+
+function trainModel() {
+  var trainingForm = document.getElementById('traingForm');
+  trainingForm.style.display='NONE';
+  classifier.train(function(lossValue) {
+    if (lossValue) {
+      loss = lossValue;
+      select('#trainingLoss').html('Loss: ' + loss);
+    } else {
+      select('#trainingLoss').html('Done Training! Final Loss: ' + loss);
+      console.log('Start Application');
+      classifier.classify(gotResult);
+    }
   });
+}
+
+function showHideTraingForm(){
+  var trainingFormButon = document.getElementById('showHideTrainingForm');
+  var trainingFormLabel = trainingFormButon.innerHTML;
+  if('Show Training Form' == trainingFormLabel){
+    var trainingForm = document.getElementById('traingForm');
+    trainingForm.style.display='block';
+    trainingFormButon.innerHTML = 'Hide Training Form'
+  }else if('Hide Training Form' == trainingFormLabel) {
+    trainingFormButon.innerHTML = 'Show Training Form'
+    var trainingForm = document.getElementById('traingForm');
+    trainingForm.style.display='NONE';
+  }
 
 }

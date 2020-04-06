@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web Cam Tutorial</title>
+  <script src="webcam.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+</head>
+<body>
+  <div id="my_camera" style="display:NONE"></div>
+
+  <script type="text/javascript">
+
+    Webcam.set({width: 320,
+       height: 240,
+       image_format: 'jpeg',
+       jpeg_quality: 90
+     });
+     Webcam.attach( '#my_camera' );
+  </script>
+  <script src="WebCamCapture.js" charset="utf-8"></script>
+  <script src="reporting.js" style charset="utf-8"></script>
+ <center>
+   <table>
+     <tr>
+       <td>
+         <button id="monitorBlink" type="button" name="button"  onclick="monitorBlink()">Capture Blink</button>
+       </td>
+       <td>
+         <button id="reportButton" type="button" name="button" onclick="showHideBlinkReport()">Show Blink Report</button>
+       </td>
+     </tr>
+   </table>
+   <div id="reportContainer" style="display:NONE">
+     <canvas id="myChart" style="height:20vh; width:40vw">
+   </div>
+   <h1>Result Below</h1>
+   <div id="results" ></div>
+   <div id="blinkCountContainer">
+     <h1 id="blinkCount"></h1>
+   </div>
+   <form id="myForm" action="index.html" method="post" style="display:NONE"></form>
+ </center>
+
+
+
+</body>
+</html>

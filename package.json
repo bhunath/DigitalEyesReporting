@@ -1,0 +1,24 @@
+{
+  "name": "digitaleyesreporting",
+  "version": "1.0.0",
+  "description": "Digital Eyes Reporting",
+  "main": "digitalEyesVideo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhunath/DigitalEyesReporting.git"
+  },
+  "author": "bhunath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhunath/DigitalEyesReporting/issues"
+  },
+  "homepage": "https://github.com/bhunath/DigitalEyesReporting#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
