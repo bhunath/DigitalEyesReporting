@@ -1,4 +1,26 @@
 var take_snapshot_interval;
+
+const modelParams = {
+  flipHorizontal: true,   // flip e.g for video
+  imageScaleFactor: 0.5,  // reduce input image size for gains in speed.
+  maxNumBoxes: 20,        // maximum number of boxes to detect
+  iouThreshold: 0.5,      // ioU threshold for non-max suppression
+  scoreThreshold: 0.90,    // confidence threshold for predictions.
+};
+
+let model;
+
+var audio = document.getElementById('audio');
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+console.log(audio,canvas,context);
+
+loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
+  console.log('Model Loaded');
+  model = lmodel;
+});
+
+let counter = 10;
 function take_snapshot() {
 
  // take snapshot and get image data
@@ -6,8 +28,28 @@ function take_snapshot() {
   sendImagetoServer(data_uri);
   // display results in page
   document.getElementById('results').innerHTML =
-  '<img src="'+data_uri+'"/>';
-  } );
+  '<img id=\'img\' src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
+  // Load the model.
+  if(model){
+      counter = 10;
+      const img = document.getElementById('img');
+      if(img){
+        model.detect(img).then(predictions => {
+            if(predictions){
+              console.debug('Predictions: ', predictions);
+              if(predictions.length > 0){
+                model.renderPredictions(predictions,canvas,context,img);
+                audio.play();
+              }else{
+                audio.pause();
+              }
+            }
+          });
+        }
+      }else{
+        counter--;
+      }
+  });
 }
 
 

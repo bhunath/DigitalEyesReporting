@@ -42,8 +42,6 @@ function displayChart(label,datasets){
 
 function hideyChart(){
   reportContainer = document.getElementById('reportContainer');
-  myChart = document.getElementById('myChart');
-  myChart.style.display='NONE';
   reportContainer.style.display='NONE';
   console.log(reportContainer);
 }
@@ -51,7 +49,6 @@ function hideyChart(){
 function showChart(){
   reportContainer = document.getElementById('reportContainer');
   myChart = document.getElementById('myChart');
-  myChart.style.display='block';
   reportContainer.style.display='block';
 }
 
@@ -77,7 +74,11 @@ var optionBar =  {
         }
     };
 
-function displayBlinkReportPerMinuteChart(label,datasets){
+function displayDigitalEyeReport(label,datasets){
+  if(digitalEyesChart){
+    console.log('Destroy');
+    digitalEyesChart.clear();
+  }
   showChart();
   var myChart = document.getElementById('myChart');
   var ctx = myChart.getContext('2d');
@@ -96,6 +97,8 @@ function displayBlinkReportPerMinuteChart(label,datasets){
 }
 
 function showHideBlinkReport(){
+  var reportType = document.getElementById("reportType").value;
+  console.log("Report Type",reportType);
   var reportButton = document.getElementById('reportButton');
   console.log(reportButton);
   var reportButtonLabel = reportButton.innerHTML;
@@ -103,7 +106,19 @@ function showHideBlinkReport(){
     reportButton.innerHTML = 'Hide Blink Report';
     // Creating a XHR object
     let xhr = new XMLHttpRequest();
-    let url = "http://localhost:8080/fetch_blink_per_minute_data";
+    let url = '';
+    let labelToShow = ''
+    if(reportType == 'Blink'){
+      url = "http://localhost:8080/fetch_blink_per_minute_data";
+      labelToShow = 'Blink Count';
+    }else if(reportType == 'Exposure'){
+      url = "http://localhost:8080/fetch_exposure_data";
+      labelToShow = 'Exposure'
+    } else{
+      alert('Select a Report Type');
+      return;
+    }
+
     // open a connection
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function () {
@@ -121,7 +136,7 @@ function showHideBlinkReport(){
             blinkReportPerMinute.push(blinkStatePerMinute[attribute])
           }
           var dataset = {
-            label: 'Blink Count',
+            label: labelToShow,
             fill:false,
             backgroundColor: "rgba(225,0,0,0.4)",
             borderColor: "rgba(225,0,0,0.4)",
@@ -130,7 +145,7 @@ function showHideBlinkReport(){
           console.log(blinkStatePerMinute);
 
           dataSets.push(dataset);
-          displayBlinkReportPerMinuteChart(label,dataSets);
+          displayDigitalEyeReport(label,dataSets);
           return this.responseText;
         }
       };

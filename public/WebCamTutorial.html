@@ -9,10 +9,13 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"> </script>
 </head>
 <body>
-  <div id="my_camera" style="display:NONE"></div>
 
+  <div id="my_camera" style="display:NONE"></div>
+  <audio src="./sirena_ambulanza.mp3" style="display:NONE" id="audio"></audio>
+  <canvas id="canvas" style="display:NONE" width="300" height="300"></canvas>
   <script type="text/javascript">
 
     Webcam.set({width: 320,
@@ -24,6 +27,7 @@
   </script>
   <script src="WebCamCapture.js" charset="utf-8"></script>
   <script src="reporting.js" style charset="utf-8"></script>
+
  <center>
    <table>
      <tr>
@@ -32,6 +36,12 @@
        </td>
        <td>
          <button id="reportButton" type="button" name="button" onclick="showHideBlinkReport()">Show Blink Report</button>
+       </td>
+       <td>
+         <select id="reportType">
+          <option value="Blink">BlinkReport</option>
+          <option value="Exposure">ExposureReport</option>
+         </select>
        </td>
      </tr>
    </table>
@@ -45,8 +55,5 @@
    </div>
    <form id="myForm" action="index.html" method="post" style="display:NONE"></form>
  </center>
-
-
-
 </body>
 </html>
