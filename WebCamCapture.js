@@ -4,10 +4,10 @@ let captureTouch = false;
 
 const modelParams = {
   flipHorizontal: true,   // flip e.g for video
-  imageScaleFactor: 0.5,  // reduce input image size for gains in speed.
+  imageScaleFactor: 0.75,  // reduce input image size for gains in speed.
   maxNumBoxes: 20,        // maximum number of boxes to detect
   iouThreshold: 0.5,      // ioU threshold for non-max suppression
-  scoreThreshold: 0.50,    // confidence threshold for predictions.
+  scoreThreshold: 0.80,    // confidence threshold for predictions.
 };
 
 let model;
@@ -30,9 +30,9 @@ function take_snapshot() {
     console.debug("Running Blink Monitor");
     sendImagetoServer(data_uri);
   }
-  // display results in page
+  // display results in page style="display:NONE"
   document.getElementById('results').innerHTML =
-  '<img id=\'img\' style="display:NONE" src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
+  '<img id=\'img\'  src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
   // Load the model.
   const img = document.getElementById('img');
   console.debug("Running Predictions",img,model)
