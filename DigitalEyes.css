@@ -1,0 +1,19 @@
+button:hover{
+  background-color: #00909e;
+}
+
+.excercise{
+  height: 50%;
+  width:  50%;
+}
+
+.excercises {
+  margin: 50px;
+  display: inline-block;
+  text-align: start;
+
+}
+
+.caption {
+    display: block;
+}

@@ -1,11 +1,13 @@
 var take_snapshot_interval;
+let captureBlink = false;
+let captureTouch = false;
 
 const modelParams = {
   flipHorizontal: true,   // flip e.g for video
   imageScaleFactor: 0.5,  // reduce input image size for gains in speed.
   maxNumBoxes: 20,        // maximum number of boxes to detect
   iouThreshold: 0.5,      // ioU threshold for non-max suppression
-  scoreThreshold: 0.90,    // confidence threshold for predictions.
+  scoreThreshold: 0.50,    // confidence threshold for predictions.
 };
 
 let model;
@@ -20,20 +22,23 @@ loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
   model = lmodel;
 });
 
-let counter = 10;
-function take_snapshot() {
 
+function take_snapshot() {
  // take snapshot and get image data
  Webcam.snap( function(data_uri) {
-  sendImagetoServer(data_uri);
+  if(captureBlink){
+    console.debug("Running Blink Monitor");
+    sendImagetoServer(data_uri);
+  }
   // display results in page
   document.getElementById('results').innerHTML =
-  '<img id=\'img\' src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
+  '<img id=\'img\' style="display:NONE" src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
   // Load the model.
-  if(model){
-      counter = 10;
-      const img = document.getElementById('img');
-      if(img){
+  const img = document.getElementById('img');
+  console.debug("Running Predictions",img,model)
+  if(model && captureTouch){
+    if(img){
+        console.debug("Running Predictions")
         model.detect(img).then(predictions => {
             if(predictions){
               console.debug('Predictions: ', predictions);
@@ -46,8 +51,6 @@ function take_snapshot() {
             }
           });
         }
-      }else{
-        counter--;
       }
   });
 }
@@ -99,28 +102,41 @@ function showWebCam(){
 }
 
 function monitorBlink(){
+  if(!take_snapshot_interval){
+    take_snapshot_interval = setInterval(take_snapshot,100);
+  }
   var monitorBlinkButton = document.getElementById('monitorBlink');
   var monitorBlinkLabel = monitorBlinkButton.innerHTML;
   if('Capture Blink' == monitorBlinkLabel){
-    showWebCam();
+    //showWebCam();
     monitorBlinkButton.innerHTML = 'Stop Monitor';
-    take_snapshot_interval = setInterval(take_snapshot,100);
+    captureBlink = true;
   }else if('Stop Monitor' == monitorBlinkLabel){
-    hideWebCam();
-    console.log('Stop is Called',take_snapshot_interval)
+    //hideWebCam();
+    captureBlink = false;
+    console.log('Stop is Called')
     monitorBlinkButton.innerHTML = 'Capture Blink';
-    clearInterval(take_snapshot_interval);
+    //clearInterval(take_snapshot_interval);
     // Creating a XHR object
-    let xhr = new XMLHttpRequest();
-    let url = "http://localhost:8080/stop_capturing";
-    // open a connection
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log("Python Writer is close")
-        }
-      };
-    xhr.send();
   }
+ }
 
-}
+ function monitorTouch(){
+   if(!take_snapshot_interval){
+     take_snapshot_interval = setInterval(take_snapshot,100);
+   }
+   var monitorTouchButton = document.getElementById('monitorTouch');
+   var monitorTouchLabel = monitorTouchButton.innerHTML;
+   if('Monitor Touch' == monitorTouchLabel){
+     //showWebCam();
+     monitorTouchButton.innerHTML = 'Stop Touch';
+     captureTouch = true;
+   }else if('Stop Touch' == monitorTouchLabel){
+     //hideWebCam();
+     captureTouch = false;
+     console.log('Stop is Called')
+     monitorTouchButton.innerHTML = 'Monitor Touch';
+     //clearInterval(take_snapshot_interval);
+     // Creating a XHR object
+   }
+ }
