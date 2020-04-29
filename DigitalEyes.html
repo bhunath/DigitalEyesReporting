@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,82 +8,272 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Digital Eyes</title>
   <script src="webcam.min.js" charset="utf-8"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="DigitalEyes.css">
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"> </script>
 </head>
+
 <body>
 
-  <div id="my_camera" style="display:NONE"></div>
-  <audio src="./sirena_ambulanza.mp3" style="display:NONE" id="audio"></audio>
-  <canvas id="canvas" style="display:NONE" width="300" height="300"></canvas>
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-3">
+
+        <div>
+
+          <div class="col-12 text-center">
+            <img src="images\digitalEyes.jfif" alt="">
+            <b>Digital Eyes</b>
+
+          </div>
+        </div>
+
+        <ul class="nav flex-column mt-2">
+          <li class="nav-item nav-tabs">
+            <a data-toggle="tab" class="nav-link active" href="#home">Home</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="monitorBlink" data-toggle="tab" class="nav-link" href="#cameraViewer"
+              >Dashboard</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="reportButton" data-toggle="tab" class="nav-link" onclick="showBlinkReport()"
+              href="#reportContainer">Show Blink Report</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="exposureReportButton" data-toggle="tab" class="nav-link" onclick="showExposureReport()"
+              href="#exposureReportContainer">Show Exposure Report</a>
+          </li>
+        </ul>
+
+
+      </div>
+      <div class="col-9">
+        <div class="tab-content">
+          <div id="home" class="tab-pane in active">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row text-center mt-2 align-items-center">
+                  <div class="col-12 mb-2 mt-2">
+                    <div class="row">
+                      <div class="col">
+
+                        <ul class="nav flex-column mt-2">
+                          <li class="nav-item nav-tabs">
+                            <a data-toggle="collapse" class="nav-link" href="#digitalEyesDesc"><b>What is Digital
+                                Eyes.?</b></a>
+                            <div class="collapse show" id="digitalEyesDesc">
+                              <div class="card card-body">
+                                Description About Digital Eyes
+                              </div>
+                            </div>
+                          </li>
+
+                          <li class="nav-item nav-tabs">
+                            <a data-toggle="collapse" class="nav-link" href="#howDoesItWork"><b>How does is
+                                work.?</b></a>
+                            <div class="collapse show" id="howDoesItWork">
+                              <div class="card card-body">
+                                It works as below
+                              </div>
+                            </div>
+                          </li>
+
+                          <li class="nav-item nav-tabs">
+                            <a data-toggle="collapse" class="nav-link" href="#eyeExcersises"><b>Eye Excersises</b></a>
+                            <div class="collapse show" id="eyeExcersises">
+                              <div class="card card-body">
+                                <div>
+                                  Eye excersised are important for our eyes.
+                                </div>
+                                <div class="row mt-2">
+                                  <div class="col">
+                                    <img class="excercise"
+                                      src="https://i.pinimg.com/originals/f9/57/44/f95744de003455ea5ba369ca465f60ed.gif">
+                                    <span class="caption">Eye Rotation</span>
+                                  </div>
+                                  <div class="col">
+                                    <img class="excercise"
+                                      src="https://i.pinimg.com/originals/10/b1/99/10b19952132d8c51b90536ffdb3b5f77.gif">
+                                    <span class="caption">Eye ZigZag</span>
+                                  </div>
+                                  <div class="col">
+                                    <img class="excercise"
+                                      src="https://i.pinimg.com/originals/5f/9b/cd/5f9bcdf80c5df9e03dfd70b591375637.gif">
+                                    <span class="caption">Eye Accross</span>
+                                  </div>
+                                  <div class="col">
+                                    <img class="excercise"
+                                      src="https://i1.wp.com/timeshood.com/wp-content/uploads/2017/09/Eye-Expending-Circle.gif?resize=551%2C302&ssl=1"
+                                      alt="">
+                                    <span class="caption">Eye Spin</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </li>
+
+                        </ul>
+                      </div>
+
+                    </div>
+                    <div id="eye_excersises_camera"></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="reportContainer" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+
+                  <div class="col">
+                    <div><b>Blink Statistics (Given for every minute)</b></div>
+                    <canvas id="myChart" style="height:500px; width:100%">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div id="cameraViewer" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col">
+                        <div class="card" style="width: 100%;">
+
+
+
+                          <div class="card-body">
+                            <div><span><b>Blink Detector</b></span><span><button type="button"
+                                  class="btn btn-primary ml-2" onclick="monitorBlink()" id="btnBlinkDetector">Start</button></span></div>
+                            <div>
+
+                              <div id="blinkCountContainer">
+                                <span id="blinkCount">Stopped</span>
+                              </div>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col">
+
+                        <div class="card" style="width: 100%;">
+
+
+
+                          <div class="card-body">
+                            <div><span><b>Hand Detector</b></span><span><button type="button"
+                              class="btn btn-primary ml-2" onclick="monitorTouch()" id="btnMonitorTouch">Start</button></span></div>
+                            <div>
+                              <div id="touchMonitorStatus">Stopped</div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xs-12" style="margin: 10px auto;">
+
+                    <div id="my_camera" style="margin: 0 auto;"></div>
+                    <div id="results"></div>
+                    <form id="myForm" action="index.html" method="post" style="display:NONE"></form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div id="exposureReportContainer" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+
+                  <div class="col">
+                    <div><b>Exposure Statistics</b></div>
+                    <canvas id="exposureChart" style="height:500px; width:100%">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <audio src="./sirena_ambulanza.mp3" style="display:NONE" id="audio"></audio>
+        <canvas id="canvas" style="display:NONE" width="300" height="300"></canvas>
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+
+  </div>
+
   <script type="text/javascript">
 
-    Webcam.set({width: 320,
-       height: 240,
-       image_format: 'jpeg',
-       jpeg_quality: 90
-     });
-     Webcam.attach( '#my_camera' );
+    window.onload = function () {
+      Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+      });
+      Webcam.attach('#my_camera');
+    }
   </script>
   <script src="WebCamCapture.js" charset="utf-8"></script>
   <script src="reporting.js" style charset="utf-8"></script>
 
- <center>
-   <img src="images\digitalEyes.jfif" alt="">
-   <table>
-     <tr>
-       <td>
-         <button id="monitorTouch" type="button" class="form-control" name="button"  onclick="monitorTouch()">Monitor Touch</button>
-       </td>
-       <td>
-         <button id="monitorBlink" type="button" class="form-control" name="button"  onclick="monitorBlink()">Capture Blink</button>
-       </td>
-       <td>
-         <button id="reportButton" type="button" class="form-control" name="button" onclick="showHideBlinkReport()">Show Blink Report</button>
-       </td>
-       <td>
-         <select id="reportType" class="form-control">
-          <option value="Blink">BlinkReport</option>
-          <option value="Exposure">ExposureReport</option>
-         </select>
-       </td>
-     </tr>
-   </table>
-   <div id="reportContainer" style="display:NONE">
-     <canvas id="myChart" style="height:20vh; width:40vw">
-   </div
-   <div id="blinkCountContainer">
-     <h1 id="blinkCount"></h1>
-   </div>
-   <form id="myForm" action="index.html" method="post" style="display:NONE"></form>
- </center>
- <div class="excercises">
-   <table>
-     <tr>
-       <td>
-         <img class="excercise" src="https://i.pinimg.com/originals/f9/57/44/f95744de003455ea5ba369ca465f60ed.gif">
-         <span class="caption">Eye Rotation</span>
-       </td>
-       <td>
-         <img class="excercise" src="https://i.pinimg.com/originals/10/b1/99/10b19952132d8c51b90536ffdb3b5f77.gif">
-         <span class="caption">Eye ZigZag</span>
-       </td>
-       <td>
-         <img class="excercise" src="https://i.pinimg.com/originals/5f/9b/cd/5f9bcdf80c5df9e03dfd70b591375637.gif">
-         <span class="caption">Eye Accross</span>
-       </td>
-       <td>
-         <img class="excercise" src="https://i1.wp.com/timeshood.com/wp-content/uploads/2017/09/Eye-Expending-Circle.gif?resize=551%2C302&ssl=1" alt="">
-         <span class="caption">Eye Spin</span>
-       </td>
-     </tr>
-   </table>
-   </div>
- <center>
-     <div id="results" ></div>
- </center>
 </body>
+
 </html>

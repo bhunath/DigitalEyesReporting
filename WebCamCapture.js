@@ -105,17 +105,18 @@ function monitorBlink(){
   if(!take_snapshot_interval){
     take_snapshot_interval = setInterval(take_snapshot,100);
   }
-  var monitorBlinkButton = document.getElementById('monitorBlink');
+  var monitorBlinkButton = document.getElementById('btnBlinkDetector');
   var monitorBlinkLabel = monitorBlinkButton.innerHTML;
-  if('Capture Blink' == monitorBlinkLabel){
-    //showWebCam();
-    monitorBlinkButton.innerHTML = 'Stop Monitor';
+  if(!captureBlink){
     captureBlink = true;
-  }else if('Stop Monitor' == monitorBlinkLabel){
+    //showWebCam();
+    monitorBlinkButton.innerHTML = 'Stop';
+    captureBlink = true;
+  }else if(captureBlink){
     //hideWebCam();
     captureBlink = false;
     console.log('Stop is Called')
-    monitorBlinkButton.innerHTML = 'Capture Blink';
+    monitorBlinkButton.innerHTML = 'Start';
     //clearInterval(take_snapshot_interval);
     // Creating a XHR object
   }
@@ -125,17 +126,20 @@ function monitorBlink(){
    if(!take_snapshot_interval){
      take_snapshot_interval = setInterval(take_snapshot,100);
    }
-   var monitorTouchButton = document.getElementById('monitorTouch');
-   var monitorTouchLabel = monitorTouchButton.innerHTML;
-   if('Monitor Touch' == monitorTouchLabel){
+   var monitorTouchButton = document.getElementById('btnMonitorTouch');
+   var monitorTouchStatus = document.getElementById('touchMonitorStatus');
+   var touchStatus = '';
+   if(!captureTouch){
      //showWebCam();
-     monitorTouchButton.innerHTML = 'Stop Touch';
+     monitorTouchButton.innerHTML = 'Stop';
+     monitorTouchStatus.innerHTML = 'Started';
      captureTouch = true;
-   }else if('Stop Touch' == monitorTouchLabel){
+   }else if(captureTouch){
      //hideWebCam();
      captureTouch = false;
      console.log('Stop is Called')
-     monitorTouchButton.innerHTML = 'Monitor Touch';
+     monitorTouchButton.innerHTML = 'Start';
+     monitorTouchStatus.innerHTML = 'Stopped'
      //clearInterval(take_snapshot_interval);
      // Creating a XHR object
    }

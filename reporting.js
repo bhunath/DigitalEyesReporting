@@ -1,81 +1,87 @@
 var opetionEyeState = {
-        color:function(context){
-          console.log('Color');
-        },
-        fill : false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    callback: function(value,index,values){
-                      if(value == 2 ){
-                        return 'Eye Close';
-                      }else if(value == 1){
-                        return 'Eye Open';
-                      }
-                    }
-                }
-            }]
-        },
-        legends:{
-          display:false
+  color: function (context) {
+    console.log('Color');
+  },
+  fill: false,
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true,
+        callback: function (value, index, values) {
+          if (value == 2) {
+            return 'Eye Close';
+          } else if (value == 1) {
+            return 'Eye Open';
+          }
         }
-    };
+      }
+    }]
+  },
+  legends: {
+    display: false
+  }
+};
 var digitalEyesChart;
-function displayChart(label,datasets){
-    showChart();
-    var myChart = document.getElementById('myChart');
-    var ctx = myChart.getContext('2d');
-    var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-    console.log("Data",datasets);
-    //console.log("List Blink Stat",lbs);
-    digitalEyesChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: label,
-          datasets: datasets
-        },
-        options: opetionEyeState
-    });
-    console.log("charting is done");
+var exposureChart;
+function displayChart(label, datasets) {
+  showChart();
+  var myChart = document.getElementById('myChart');
+  var ctx = myChart.getContext('2d');
+  var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data", datasets);
+  //console.log("List Blink Stat",lbs);
+  digitalEyesChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: opetionEyeState
+  });
+  console.log("charting is done");
 }
 
-function hideyChart(){
+function displayExposureChart(label, datasets) {
+  showExposureChart();
+  var myChart = document.getElementById('exposureChart');
+  var ctx = myChart.getContext('2d');
+  var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data", datasets);
+  //console.log("List Blink Stat",lbs);
+  exposureChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: opetionEyeState
+  });
+  console.log("charting is done");
+}
+
+function hideyChart() {
   reportContainer = document.getElementById('reportContainer');
-  reportContainer.style.display='NONE';
+  reportContainer.style.display = 'NONE';
   console.log(reportContainer);
 }
 
-function showChart(){
+function showChart() {
   reportContainer = document.getElementById('reportContainer');
   myChart = document.getElementById('myChart');
-  reportContainer.style.display='block';
 }
 
-function addData( label, data) {
-    if(digitalEyesChart){
-      digitalEyesChart.data.labels.push(label);
-      digitalEyesChart.data.datasets.forEach((dataset) => {
-          dataset.data.push(data);
-      });
-      digitalEyesChart.update();
-    }else{
-      displayChart(label,data);
-    }
-}
+var optionBar = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+};
 
-var optionBar =  {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    };
-
-function displayDigitalEyeReport(label,datasets){
-  if(digitalEyesChart){
+function displayDigitalEyeReport(label, datasets) {
+  if (digitalEyesChart) {
     console.log('Destroy');
     digitalEyesChart.clear();
   }
@@ -83,77 +89,126 @@ function displayDigitalEyeReport(label,datasets){
   var myChart = document.getElementById('myChart');
   var ctx = myChart.getContext('2d');
   var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data",datasets);
+  console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: label,
-        datasets: datasets
-      },
-      options: optionBar
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: optionBar
   });
   console.log("charting is done");
 }
 
-function showHideBlinkReport(){
-  var reportType = document.getElementById("reportType").value;
-  console.log("Report Type",reportType);
-  var reportButton = document.getElementById('reportButton');
-  console.log(reportButton);
-  var reportButtonLabel = reportButton.innerHTML;
-  if('Show Blink Report' == reportButtonLabel){
-    reportButton.innerHTML = 'Hide Blink Report';
-    // Creating a XHR object
-    let xhr = new XMLHttpRequest();
-    let url = '';
-    let labelToShow = ''
-    if(reportType == 'Blink'){
-      url = "http://localhost:8080/fetch_blink_per_minute_data";
-      labelToShow = 'Blink Count';
-    }else if(reportType == 'Exposure'){
-      url = "http://localhost:8080/fetch_exposure_data";
-      labelToShow = 'Exposure'
-    } else{
-      alert('Select a Report Type');
-      return;
-    }
-
-    // open a connection
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          showChart();
-          var dataSets = [];
-          var backgroundColor_open = ['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)'];
-          var borderColor = ['rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)'];
-          var label = [];
-          var blinkStatePerMinute = JSON.parse(this.responseText);
-          console.log(blinkStatePerMinute);
-          var blinkReportPerMinute = [];
-          for (var attribute in blinkStatePerMinute) {
-            label.push(attribute);
-            blinkReportPerMinute.push(blinkStatePerMinute[attribute])
-          }
-          var dataset = {
-            label: labelToShow,
-            fill:false,
-            backgroundColor: "rgba(225,0,0,0.4)",
-            borderColor: "rgba(225,0,0,0.4)",
-            data: blinkReportPerMinute
-          };
-          console.log(blinkStatePerMinute);
-
-          dataSets.push(dataset);
-          displayDigitalEyeReport(label,dataSets);
-          return this.responseText;
-        }
-      };
-    xhr.send();
-
-  }else if('Hide Blink Report' == reportButtonLabel){
-    console.log('Stop is Called',take_snapshot_interval)
-    reportButton.innerHTML = 'Show Blink Report';
-    hideyChart();
+function displayExposureReport(label, datasets) {
+  if (exposureChart) {
+    console.log('Destroy');
+    exposureChart.clear();
   }
+  var myChart = document.getElementById('exposureChart');
+  var ctx = myChart.getContext('2d');
+  var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data", datasets);
+  //console.log("List Blink Stat",lbs);
+  exposureChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: optionBar
+  });
+  console.log("charting is done");
+}
+
+function showBlinkReport() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/fetch_blink_per_minute_data";
+  labelToShow = 'Blink Count';
+
+
+  // open a connection
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      showChart();
+      var dataSets = [];
+      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
+      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
+      var label = [];
+      var blinkStatePerMinute = JSON.parse(this.responseText);
+      console.log(blinkStatePerMinute);
+      var blinkReportPerMinute = [];
+      for (var attribute in blinkStatePerMinute) {
+        label.push(attribute);
+        blinkReportPerMinute.push(blinkStatePerMinute[attribute])
+      }
+      var dataset = {
+        label: labelToShow,
+        fill: false,
+        backgroundColor: "rgba(225,0,0,0.4)",
+        borderColor: "rgba(225,0,0,0.4)",
+        data: blinkReportPerMinute
+      };
+      console.log(blinkStatePerMinute);
+
+      dataSets.push(dataset);
+      displayDigitalEyeReport(label, dataSets);
+      return this.responseText;
+    }
+  };
+  xhr.send();
+
+
+}
+
+
+function showExposureReport() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/fetch_exposure_data";
+  labelToShow = 'Exposure'
+
+  // open a connection
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      showChart();
+      var dataSets = [];
+      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
+      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
+      var label = [];
+      var blinkStatePerMinute = JSON.parse(this.responseText);
+      console.log(blinkStatePerMinute);
+      var blinkReportPerMinute = [];
+      for (var attribute in blinkStatePerMinute) {
+        label.push(attribute);
+        blinkReportPerMinute.push(blinkStatePerMinute[attribute])
+      }
+      var dataset = {
+        label: labelToShow,
+        fill: false,
+        backgroundColor: "rgba(225,0,0,0.4)",
+        borderColor: "rgba(225,0,0,0.4)",
+        data: blinkReportPerMinute
+      };
+      console.log(blinkStatePerMinute);
+
+      dataSets.push(dataset);
+      displayExposureReport(label, dataSets);
+      return this.responseText;
+    }
+  };
+  xhr.send();
+
+
 }
