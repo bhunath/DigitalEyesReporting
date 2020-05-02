@@ -123,6 +123,40 @@ function displayExposureReport(label, datasets) {
   console.log("charting is done");
 }
 
+function displayClosenessReport(label, datasets) {
+  let closenessChartCanvas = document.getElementById('closenessChart');
+  let closenessChartCanvasCtx = closenessChartCanvas.getContext('2d');
+  let timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data", datasets);
+  //console.log("List Blink Stat",lbs);
+  let closenessChart = new Chart(closenessChartCanvasCtx, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: optionBar
+  });
+  console.log("charting is done");
+}
+
+function displayTouchReport(label, datasets) {
+  let touchChartCanvas = document.getElementById('touchChart');
+  let touchChartCanvasCtx = touchChartCanvas.getContext('2d');
+  let timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+  console.log("Data", datasets);
+  //console.log("List Blink Stat",lbs);
+  let touchChart = new Chart(touchChartCanvasCtx, {
+    type: 'bar',
+    data: {
+      labels: label,
+      datasets: datasets
+    },
+    options: optionBar
+  });
+  console.log("charting is done");
+}
+
 function showBlinkReport() {
 
   let xhr = new XMLHttpRequest();
@@ -211,4 +245,88 @@ function showExposureReport() {
   xhr.send();
 
 
+}
+
+function showClosenessReport() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/closeness_data";
+  labelToShow = 'Closeness'
+
+  // open a connection
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      showChart();
+      var dataSets = [];
+      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
+      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
+      var label = [];
+      var closenessData = JSON.parse(this.responseText);
+      console.log(closenessData);
+      var closenessReportPerMinute = [];
+      for (var attribute in closenessData) {
+        label.push(attribute);
+        closenessReportPerMinute.push(closenessData[attribute])
+      }
+      var dataset = {
+        label: labelToShow,
+        fill: false,
+        backgroundColor: "rgba(225,0,0,0.4)",
+        borderColor: "rgba(225,0,0,0.4)",
+        data: closenessReportPerMinute
+      };
+      console.log(closenessReportPerMinute);
+
+      dataSets.push(dataset);
+      displayClosenessReport(label, dataSets);
+      return this.responseText;
+    }
+  };
+  xhr.send();
+}
+
+function showTouchReport() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/touch_data";
+  labelToShow = 'Touch'
+
+  // open a connection
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      showChart();
+      var dataSets = [];
+      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
+      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
+      var label = [];
+      var touchData = JSON.parse(this.responseText);
+      console.log(touchData);
+      var touchReportPerMinute = [];
+      for (var attribute in touchData) {
+        label.push(attribute);
+        touchReportPerMinute.push(touchData[attribute])
+      }
+      var dataset = {
+        label: labelToShow,
+        fill: false,
+        backgroundColor: "rgba(225,0,0,0.4)",
+        borderColor: "rgba(225,0,0,0.4)",
+        data: touchReportPerMinute
+      };
+      console.log(touchReportPerMinute);
+
+      dataSets.push(dataset);
+      displayTouchReport(label, dataSets);
+      return this.responseText;
+    }
+  };
+  xhr.send();
 }

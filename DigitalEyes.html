@@ -36,7 +36,7 @@
         <div>
 
           <div class="col-12 text-center">
-            <img src="images\digitalEyes.jfif" alt="">
+            <img src="https://cdn140.picsart.com/237379232016202.gif?to=min&r=640" alt="">
             <b>Digital Eyes</b>
 
           </div>
@@ -57,6 +57,18 @@
           <li class="nav-item nav-tabs">
             <a id="exposureReportButton" data-toggle="tab" class="nav-link" onclick="showExposureReport()"
               href="#exposureReportContainer">Show Exposure Report</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="closenessReportButton" data-toggle="tab" class="nav-link" onclick="showClosenessReport()"
+              href="#closenessReportContainer">Show Closeness Report</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="touchReportButton" data-toggle="tab" class="nav-link" onclick="showTouchReport()"
+              href="#touchReportContainer">Show Touch Report</a>
+          </li>
+          <li class="nav-item nav-tabs">
+            <a id="setting" data-toggle="tab" class="nav-link"
+              href="#settings">Settings</a>
           </li>
         </ul>
 
@@ -240,6 +252,65 @@
 
           </div>
 
+          <div id="closenessReportContainer" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+
+                  <div class="col">
+                    <div><b>Closeness Statistics</b></div>
+                    <canvas id="closenessChart" style="height:500px; width:100%">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div id="touchReportContainer" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+
+                  <div class="col">
+                    <div><b>Touch Statistics</b></div>
+                    <canvas id="touchChart" style="height:500px; width:100%">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div id="settings" class="tab-pane">
+            <div class="card height-100 " style="width: 100%;">
+
+
+
+              <div class="card-body">
+                <div class="row align-items-center text-center">
+
+                  <div class="col">
+                      <h1>Settings</h1>
+                        <div class="slidecontainer">
+                          <div>
+                            <b>Touch Senstivity Precision :</b>
+                            <input class="bar" onchange="senstivityUpdate()" type="range" min="1" max="100" value="60" class="slider" id="senstivity">
+                          </div>
+                        </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
 
 

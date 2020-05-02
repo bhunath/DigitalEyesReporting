@@ -32,7 +32,7 @@ function take_snapshot() {
   }
   // display results in page style="display:NONE"
   document.getElementById('results').innerHTML =
-  '<img id=\'img\'  src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
+  '<img id=\'img\' style="display:NONE" src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
   // Load the model.
   const img = document.getElementById('img');
   console.debug("Running Predictions",img,model)
@@ -43,8 +43,8 @@ function take_snapshot() {
             if(predictions){
               console.debug('Predictions: ', predictions);
               if(predictions.length > 0){
-                model.renderPredictions(predictions,canvas,context,img);
                 audio.play();
+                storeTouch();
               }else{
                 audio.pause();
               }
@@ -55,6 +55,28 @@ function take_snapshot() {
   });
 }
 
+function storeTouch() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/store_face_touch";
+  labelToShow = 'Blink Count';
+
+
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log('touch stored')
+    }
+  };
+
+  var user_info = JSON.stringify({ "user_id": 1 });
+  xhr.send(user_info);
+}
 
 function sendImagetoServer(imageData){
   //console.log("Uploading Image");
@@ -143,4 +165,15 @@ function monitorBlink(){
      //clearInterval(take_snapshot_interval);
      // Creating a XHR object
    }
+ }
+
+
+ function senstivityUpdate(){
+   var slider = document.getElementById("senstivity");
+   precisionValue = slider.value/100;
+   modelParams.scoreThreshold = precisionValue;
+   loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
+     console.log('Model Loaded');
+     model = lmodel;
+   });
  }
