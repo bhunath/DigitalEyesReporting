@@ -12,3 +12,65 @@ img{
 .height-100 {
   height:calc(100vh - 10px);
 }
+.nav-link-dropdown[data-toggle].collapsed:after {
+  content: " ▾";
+}
+.nav-link-dropdown[data-toggle]:not(.collapsed):after {
+  content: " ▴";
+}
+.heading{
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  text-align: center;
+}
+.card-body button {
+  background-color: #0069d9;
+    border-color: #0062cc;
+   
+}
+.popover-container {
+  background: black;
+    color: white;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+}
+.popover-content{
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.popover-container .row {
+  width: 100%;
+  overflow: hidden;
+}
+div.popover-container p {
+  animation: slide-left 7s;
+  text-align: center;
+  font-weight: bold;
+  font-size: 17px;
+}
+.title-heading {
+  font-size: 25px !important;
+}
+
+@keyframes slide-left {
+  from {
+    margin-top: 100%;
+    width: 300%; 
+  }
+
+  to {
+    margin-top: 0%;
+    width: 100%;
+  }
+}
+
+
+
+

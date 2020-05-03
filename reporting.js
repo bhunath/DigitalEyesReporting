@@ -21,6 +21,7 @@ var opetionEyeState = {
     display: false
   }
 };
+var lastOpenElem;
 var digitalEyesChart;
 var exposureChart;
 function displayChart(label, datasets) {
@@ -330,3 +331,15 @@ function showTouchReport() {
   };
   xhr.send();
 }
+$(document).ready(function(){
+  setTimeout(function(){
+    $('#animContainer').remove();
+  },7000);
+  lastOpenElem = $('#homeButton');
+  $('a[data-toggle="tab"]').click(function(){
+    if(lastOpenElem){
+      lastOpenElem.removeClass("active");
+    }
+    lastOpenElem = $(this);
+  });
+});
