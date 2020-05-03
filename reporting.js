@@ -334,7 +334,7 @@ function showTouchReport() {
 $(document).ready(function(){
   setTimeout(function(){
     $('#animContainer').remove();
-  },7000);
+  },8000);
   lastOpenElem = $('#homeButton');
   $('a[data-toggle="tab"]').click(function(){
     if(lastOpenElem){
