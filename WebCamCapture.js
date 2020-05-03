@@ -95,9 +95,9 @@ function sendImagetoServer(imageData){
   // Create a state change callback
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-
-          document.getElementById('blinkCount').innerHTML = this.responseText;
-
+          let response = JSON.parse(this.responseText)
+          document.getElementById('blinkCount').innerHTML = '<b>Blink Count :</b>' +response.Blink_Count;
+          document.getElementById('blinkMessage').innerHTML = '<b>'+response.Blink_Message+'</b>';
       }
   };
 
