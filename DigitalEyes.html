@@ -33,12 +33,12 @@
     <div class="row">
       <div class="col">
     <p class="title-heading">Digital Eye</p>
-    
+
     <p>Your partner in Eye care…..</p>
     <p><img style="max-width:100%" src="images/eye-2.gif" alt=""></p>
   </div>
   </div>
- 
+
   </div>
 </div>
   <div class="container-fluid">
@@ -485,11 +485,55 @@
 
                   <div class="col">
                     <div class="heading"><b>Settings</b></div>
-                    <div class="slidecontainer mt-2">
+                    <div class="slidecontainer mt-2 col">
                       <div>
                         <b>Touch Senstivity Precision :</b>
                         <input class="bar" onchange="senstivityUpdate()" type="range" min="1" max="100" value="60"
                           class="slider" id="senstivity">
+                      </div>
+
+                    </div>
+                    <div class="mt-2 col">
+                      <div class="form-group">
+                        <label for="sel1">Blink Report Grouping :</label>
+                        <select name="blinkReportGropSetting" id="blinkReportGropSetting">
+                          <option value="minute">Minute</option>
+                          <option value="hour">Hour</option>
+                          <option value="day">Day</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="mt-2 col">
+                      <div class="form-group">
+                        <label for="sel2">Exposure Report Grouping :</label>
+                        <select name="exposureReportGropSetting" id="exposureReportGropSetting">
+                          <option value="minute">Minute</option>
+                          <option value="hour">Hour</option>
+                          <option value="day">Day</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="mt-2 col">
+                      <div class="form-group">
+                        <label for="sel3">Closeness Report Grouping :</label>
+                        <select name="closenessReportGropSetting" id="closenessReportGropSetting">
+                          <option value="minute">Minute</option>
+                          <option value="hour">Hour</option>
+                          <option value="day">Day</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="sel4">Touch Report Grouping :</label>
+                        <select name="touchReportGropSetting" id="touchReportGropSetting">
+                          <option value="minute">Minute</option>
+                          <option value="hour">Hour</option>
+                          <option value="day">Day</option>
+                        </select>
                       </div>
                     </div>
                   </div>

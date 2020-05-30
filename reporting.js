@@ -148,7 +148,7 @@ function displayTouchReport(label, datasets) {
   console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   let touchChart = new Chart(touchChartCanvasCtx, {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: label,
       datasets: datasets
@@ -164,12 +164,14 @@ function showBlinkReport() {
   let url = '';
   let labelToShow = ''
 
-  url = "http://localhost:8080/fetch_blink_per_minute_data";
+  url = "http://localhost:8080/fetch_blink";
   labelToShow = 'Blink Count';
 
 
   // open a connection
-  xhr.open("GET", url, true);
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
@@ -198,7 +200,10 @@ function showBlinkReport() {
       return this.responseText;
     }
   };
-  xhr.send();
+  let groupBy = document.getElementById('blinkReportGropSetting').value;
+  console.log("blinkReportGropSetting",groupBy);
+  let groupByJson = JSON.stringify({ "groupBy": groupBy });
+  xhr.send(groupByJson);
 
 
 }
@@ -214,7 +219,9 @@ function showExposureReport() {
   labelToShow = 'Exposure'
 
   // open a connection
-  xhr.open("GET", url, true);
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
@@ -243,7 +250,10 @@ function showExposureReport() {
       return this.responseText;
     }
   };
-  xhr.send();
+  let groupBy = document.getElementById('exposureReportGropSetting').value;
+  console.log("exposureReportGropSetting",groupBy);
+  let groupByJson = JSON.stringify({ "groupBy": groupBy });
+  xhr.send(groupByJson);
 
 
 }
@@ -258,7 +268,9 @@ function showClosenessReport() {
   labelToShow = 'Closeness'
 
   // open a connection
-  xhr.open("GET", url, true);
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
@@ -287,7 +299,10 @@ function showClosenessReport() {
       return this.responseText;
     }
   };
-  xhr.send();
+  let groupBy = document.getElementById('closenessReportGropSetting').value;
+  console.log("closenessReportGropSetting",groupBy);
+  let groupByJson = JSON.stringify({ "groupBy": groupBy });
+  xhr.send(groupByJson);
 }
 
 function showTouchReport() {
@@ -300,7 +315,9 @@ function showTouchReport() {
   labelToShow = 'Touch'
 
   // open a connection
-  xhr.open("GET", url, true);
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
@@ -329,7 +346,10 @@ function showTouchReport() {
       return this.responseText;
     }
   };
-  xhr.send();
+  let groupBy = document.getElementById('touchReportGropSetting').value;
+  console.log("touchReportGropSetting",groupBy);
+  let groupByJson = JSON.stringify({ "groupBy": groupBy });
+  xhr.send(groupByJson);
 }
 $(document).ready(function(){
   setTimeout(function(){
