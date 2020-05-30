@@ -93,7 +93,7 @@ function displayDigitalEyeReport(label, datasets) {
   console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: label,
       datasets: datasets
@@ -114,7 +114,7 @@ function displayExposureReport(label, datasets) {
   console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   exposureChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: label,
       datasets: datasets
@@ -131,7 +131,7 @@ function displayClosenessReport(label, datasets) {
   console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   let closenessChart = new Chart(closenessChartCanvasCtx, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: label,
       datasets: datasets
@@ -148,7 +148,7 @@ function displayTouchReport(label, datasets) {
   console.log("Data", datasets);
   //console.log("List Blink Stat",lbs);
   let touchChart = new Chart(touchChartCanvasCtx, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: label,
       datasets: datasets

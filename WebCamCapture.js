@@ -98,6 +98,9 @@ function sendImagetoServer(imageData){
           let response = JSON.parse(this.responseText)
           document.getElementById('blinkCount').innerHTML = '<b>Blink Count :</b>' +response.Blink_Count;
           document.getElementById('blinkMessage').innerHTML = '<b>'+response.Blink_Message+'</b>';
+          if(response.Blink_Message){
+            console.log('Notification : '+response.Blink_Message)
+          }
       }
   };
 
