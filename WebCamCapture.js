@@ -1,5 +1,8 @@
 var take_snapshot_interval;
 let captureBlink = false;
+let captureCloseness=false;
+let captureRedEye=false;
+let enableForceLock=false;
 let captureTouch = false;
 
 const modelParams = {
@@ -15,10 +18,10 @@ let model;
 var audio = document.getElementById('audio');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-console.log(audio,canvas,context);
+//console.log(audio,canvas,context);
 
 loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
-  console.log('Model Loaded');
+  //console.log('Model Loaded');
   model = lmodel;
 });
 
@@ -70,7 +73,7 @@ function storeTouch() {
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log('touch stored')
+        // //console.log('touch stored')
     }
   };
 
@@ -78,8 +81,42 @@ function storeTouch() {
   xhr.send(user_info);
 }
 
+function callForceLockApi() {
+
+  let xhr = new XMLHttpRequest();
+  let url = '';
+  let labelToShow = ''
+
+  url = "http://localhost:8080/configure_force_lock";
+  labelToShow = 'Blink Count';
+
+
+  // open a connection
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        if(this.responseText == 'Started'){
+          enableForceLock = true;
+        }else{
+          enableForceLock = false;
+        }
+        updateUI();
+    }
+  };
+  let action = '';
+  let timeInMinute = 1
+  if(enableForceLock){
+    action='start'
+  }else{
+    action='stop'
+  }
+  var content = JSON.stringify({ "user_id": 1 , "action":action ,"time":timeInMinute });
+  xhr.send(content);
+}
+
 function sendImagetoServer(imageData){
-  //console.log("Uploading Image");
+  ////console.log("Uploading Image");
   // Creating a XHR object
   let xhr = new XMLHttpRequest();
   let url = "http://localhost:8080/uploadImage";
@@ -99,7 +136,7 @@ function sendImagetoServer(imageData){
           document.getElementById('blinkCount').innerHTML = '<b>Blink Count :</b>' +response.Blink_Count;
           document.getElementById('blinkMessage').innerHTML = '<b>'+response.Blink_Message+'</b>';
           if(response.Blink_Message){
-            console.log('Notification : '+response.Blink_Message)
+            //console.log('Notification : '+response.Blink_Message)
           }
       }
   };
@@ -111,19 +148,21 @@ function sendImagetoServer(imageData){
   var formData = new FormData(form);
   formData.append("file", imageData);
   formData.append("user_info",user_info);
+  formData.append("closeness",captureCloseness);
+  formData.append("redness",captureRedEye);
   xhr.send(formData);
 }
 
 function hideWebCam(){
   result = document.getElementById('results');
   result.style.display='NONE';
-  console.log(result);
+  //console.log(result);
 }
 
 function showWebCam(){
   result = document.getElementById('results');
   result.style.display='block';
-  console.log(result);
+  //console.log(result);
 }
 
 function monitorBlink(){
@@ -140,11 +179,69 @@ function monitorBlink(){
   }else if(captureBlink){
     //hideWebCam();
     captureBlink = false;
-    console.log('Stop is Called')
+    //console.log('Stop is Called')
     monitorBlinkButton.innerHTML = 'Start';
     //clearInterval(take_snapshot_interval);
     // Creating a XHR object
   }
+ }
+
+ function monitorCloseness(){
+   let closenessDetectionButton = document.getElementById('closenessDetection');
+   let closenessDetectionStatusButton = document.getElementById('closenessDetectionStatus');
+   let closenessDetectionLabel = closenessDetectionButton.innerHTML;
+   if(!captureCloseness){
+     captureCloseness = true;
+     closenessDetectionButton.innerHTML = 'Disable';
+     closenessDetectionStatusButton.innerHTML="Enabled"
+   }else if(captureCloseness){
+     captureCloseness = false;
+     //console.log('Stop is Called')
+     closenessDetectionButton.innerHTML = 'Enable';
+     closenessDetectionStatusButton.innerHTML="Disabled"
+   }
+ }
+
+ function monitorRedness(){
+   let rednessDetectionButton = document.getElementById('rednessDetection');
+   let rednessDetectionStatusButton = document.getElementById('rednessDetectionStatus');
+   let rednessDetectionLabel = rednessDetectionButton.innerHTML;
+   if(!captureRedEye){
+     captureRedEye = true;
+     rednessDetectionButton.innerHTML = 'Disable';
+     rednessDetectionStatusButton.innerHTML="Enabled"
+    }else if(captureRedEye){
+     captureRedEye = false;
+     //console.log('Stop is Called')
+     rednessDetectionButton.innerHTML = 'Enable';
+     rednessDetectionStatusButton.innerHTML="Disabled"
+   }
+ }
+
+ function forceLockAction(){
+   let forceLockButton = document.getElementById('forceLock');
+   let forceLockStatusButton = document.getElementById('forceLockStatus');
+   let forceLockLabel = forceLockButton.innerHTML;
+   if(!enableForceLock){
+     enableForceLock = true;
+     callForceLockApi();
+    }else if(enableForceLock){
+     enableForceLock = false;
+     callForceLockApi();
+   }
+ }
+
+ function updateUI(){
+   let forceLockButton = document.getElementById('forceLock');
+   let forceLockStatusButton = document.getElementById('forceLockStatus');
+   let forceLockLabel = forceLockButton.innerHTML;
+   if(enableForceLock){
+     forceLockButton.innerHTML = 'Stop';
+     forceLockStatusButton.innerHTML="Started"
+   }else if(!enableForceLock){
+     forceLockButton.innerHTML = 'Start';
+     forceLockStatusButton.innerHTML="Stopped"
+   }
  }
 
  function monitorTouch(){
@@ -162,7 +259,7 @@ function monitorBlink(){
    }else if(captureTouch){
      //hideWebCam();
      captureTouch = false;
-     console.log('Stop is Called')
+     //console.log('Stop is Called')
      monitorTouchButton.innerHTML = 'Start';
      monitorTouchStatus.innerHTML = 'Stopped'
      //clearInterval(take_snapshot_interval);
@@ -176,7 +273,7 @@ function monitorBlink(){
    precisionValue = slider.value/100;
    modelParams.scoreThreshold = precisionValue;
    loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
-     console.log('Model Loaded');
+     //console.log('Model Loaded');
      model = lmodel;
    });
  }

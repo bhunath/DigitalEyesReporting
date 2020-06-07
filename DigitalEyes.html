@@ -328,6 +328,66 @@
 
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col">
+
+                        <div class="card" style="width: 100%;">
+
+
+
+                          <div class="card-body">
+                            <div class="heading"><span><b>Closeness Detection</b></span><span>
+                              <button id="closenessDetection" onclick="monitorCloseness()" type="button" class="btn btn-primary ml-2" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                  Enable
+                              </button>
+                            <div>
+                              <div id="closenessDetectionStatus">Stopped</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div class="col">
+
+                        <div class="card" style="width: 100%;">
+
+
+
+                          <div class="card-body">
+                            <div class="heading"><span><b>Redness Detection</b></span><span>
+                              <button id="rednessDetection" onclick="monitorRedness()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                  Enable
+                              </button>
+                              <div>
+                                <div id="rednessDetectionStatus">Stopped</div>
+                              </div>
+                            </div>
+                          </div>
+
+                      </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+
+                            <div class="card" style="width: 100%;">
+
+
+
+                              <div class="card-body">
+                                <div class="heading"><span><b>Force Lock</b></span><span>
+                                  <button id="forceLock" onclick="forceLockAction()" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                      Start
+                                  </button>
+                                <div>
+                                  <div id="forceLockStatus">Stopped</div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-6 col-xs-12" style="margin: 10px auto;">
 
@@ -534,6 +594,12 @@
                           <option value="hour">Hour</option>
                           <option value="day">Day</option>
                         </select>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="sel4">Force Lock</label>
+                        <input id="forceLock" type="text">
                       </div>
                     </div>
                   </div>
