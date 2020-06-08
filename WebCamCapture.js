@@ -105,7 +105,7 @@ function callForceLockApi() {
     }
   };
   let action = '';
-  let timeInMinute = 1
+  let timeInMinute = document.getElementById('forceLockSetting').value;
   if(enableForceLock){
     action='start'
   }else{
