@@ -1,6 +1,6 @@
 var opetionEyeState = {
   color: function (context) {
-    console.log('Color');
+    //console.log('Color');
   },
   fill: false,
   scales: {
@@ -29,8 +29,8 @@ function displayChart(label, datasets) {
   var myChart = document.getElementById('myChart');
   var ctx = myChart.getContext('2d');
   var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -39,7 +39,7 @@ function displayChart(label, datasets) {
     },
     options: opetionEyeState
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function displayExposureChart(label, datasets) {
@@ -47,8 +47,8 @@ function displayExposureChart(label, datasets) {
   var myChart = document.getElementById('exposureChart');
   var ctx = myChart.getContext('2d');
   var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   exposureChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -57,13 +57,13 @@ function displayExposureChart(label, datasets) {
     },
     options: opetionEyeState
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function hideyChart() {
   reportContainer = document.getElementById('reportContainer');
   reportContainer.style.display = 'NONE';
-  console.log(reportContainer);
+  //console.log(reportContainer);
 }
 
 function showChart() {
@@ -83,15 +83,15 @@ var optionBar = {
 
 function displayDigitalEyeReport(label, datasets) {
   if (digitalEyesChart) {
-    console.log('Destroy');
+    //console.log('Destroy');
     digitalEyesChart.clear();
   }
   showChart();
   var myChart = document.getElementById('myChart');
   var ctx = myChart.getContext('2d');
   var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -100,19 +100,19 @@ function displayDigitalEyeReport(label, datasets) {
     },
     options: optionBar
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function displayExposureReport(label, datasets) {
   if (exposureChart) {
-    console.log('Destroy');
+    //console.log('Destroy');
     exposureChart.clear();
   }
   var myChart = document.getElementById('exposureChart');
   var ctx = myChart.getContext('2d');
   var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   exposureChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -121,15 +121,15 @@ function displayExposureReport(label, datasets) {
     },
     options: optionBar
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function displayClosenessReport(label, datasets) {
   let closenessChartCanvas = document.getElementById('closenessChart');
   let closenessChartCanvasCtx = closenessChartCanvas.getContext('2d');
   let timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   let closenessChart = new Chart(closenessChartCanvasCtx, {
     type: 'line',
     data: {
@@ -138,15 +138,15 @@ function displayClosenessReport(label, datasets) {
     },
     options: optionBar
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function displayTouchReport(label, datasets) {
   let touchChartCanvas = document.getElementById('touchChart');
   let touchChartCanvasCtx = touchChartCanvas.getContext('2d');
   let timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  console.log("Data", datasets);
-  //console.log("List Blink Stat",lbs);
+  //console.log("Data", datasets);
+  ////console.log("List Blink Stat",lbs);
   let touchChart = new Chart(touchChartCanvasCtx, {
     type: 'bar',
     data: {
@@ -155,7 +155,7 @@ function displayTouchReport(label, datasets) {
     },
     options: optionBar
   });
-  console.log("charting is done");
+  //console.log("charting is done");
 }
 
 function showBlinkReport() {
@@ -180,7 +180,7 @@ function showBlinkReport() {
       var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
       var label = [];
       var blinkStatePerMinute = JSON.parse(this.responseText);
-      console.log(blinkStatePerMinute);
+      //console.log(blinkStatePerMinute);
       var blinkReportPerMinute = [];
       for (var attribute in blinkStatePerMinute) {
         label.push(attribute);
@@ -193,7 +193,7 @@ function showBlinkReport() {
         borderColor: "rgba(225,0,0,0.4)",
         data: blinkReportPerMinute
       };
-      console.log(blinkStatePerMinute);
+      //console.log(blinkStatePerMinute);
 
       dataSets.push(dataset);
       displayDigitalEyeReport(label, dataSets);
@@ -201,7 +201,7 @@ function showBlinkReport() {
     }
   };
   let groupBy = document.getElementById('blinkReportGropSetting').value;
-  console.log("blinkReportGropSetting",groupBy);
+  //console.log("blinkReportGropSetting",groupBy);
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 
@@ -230,7 +230,7 @@ function showExposureReport() {
       var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
       var label = [];
       var blinkStatePerMinute = JSON.parse(this.responseText);
-      console.log(blinkStatePerMinute);
+      //console.log(blinkStatePerMinute);
       var blinkReportPerMinute = [];
       for (var attribute in blinkStatePerMinute) {
         label.push(attribute);
@@ -243,7 +243,7 @@ function showExposureReport() {
         borderColor: "rgba(225,0,0,0.4)",
         data: blinkReportPerMinute
       };
-      console.log(blinkStatePerMinute);
+      //console.log(blinkStatePerMinute);
 
       dataSets.push(dataset);
       displayExposureReport(label, dataSets);
@@ -251,7 +251,7 @@ function showExposureReport() {
     }
   };
   let groupBy = document.getElementById('exposureReportGropSetting').value;
-  console.log("exposureReportGropSetting",groupBy);
+  //console.log("exposureReportGropSetting",groupBy);
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 
@@ -279,7 +279,7 @@ function showClosenessReport() {
       var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
       var label = [];
       var closenessData = JSON.parse(this.responseText);
-      console.log(closenessData);
+      //console.log(closenessData);
       var closenessReportPerMinute = [];
       for (var attribute in closenessData) {
         label.push(attribute);
@@ -292,7 +292,7 @@ function showClosenessReport() {
         borderColor: "rgba(225,0,0,0.4)",
         data: closenessReportPerMinute
       };
-      console.log(closenessReportPerMinute);
+      //console.log(closenessReportPerMinute);
 
       dataSets.push(dataset);
       displayClosenessReport(label, dataSets);
@@ -300,7 +300,7 @@ function showClosenessReport() {
     }
   };
   let groupBy = document.getElementById('closenessReportGropSetting').value;
-  console.log("closenessReportGropSetting",groupBy);
+  //console.log("closenessReportGropSetting",groupBy);
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 }
@@ -326,7 +326,7 @@ function showTouchReport() {
       var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
       var label = [];
       var touchData = JSON.parse(this.responseText);
-      console.log(touchData);
+      //console.log(touchData);
       var touchReportPerMinute = [];
       for (var attribute in touchData) {
         label.push(attribute);
@@ -339,7 +339,7 @@ function showTouchReport() {
         borderColor: "rgba(225,0,0,0.4)",
         data: touchReportPerMinute
       };
-      console.log(touchReportPerMinute);
+      //console.log(touchReportPerMinute);
 
       dataSets.push(dataset);
       displayTouchReport(label, dataSets);
@@ -347,7 +347,7 @@ function showTouchReport() {
     }
   };
   let groupBy = document.getElementById('touchReportGropSetting').value;
-  console.log("touchReportGropSetting",groupBy);
+  //console.log("touchReportGropSetting",groupBy);
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 }
