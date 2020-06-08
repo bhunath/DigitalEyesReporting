@@ -30,7 +30,7 @@ function take_snapshot() {
  // take snapshot and get image data
  Webcam.snap( function(data_uri) {
   if(captureBlink){
-    console.debug("Running Blink Monitor");
+    //console.debug("Running Blink Monitor");
     sendImagetoServer(data_uri);
   }
   // display results in page style="display:NONE"
@@ -38,13 +38,13 @@ function take_snapshot() {
   '<img id=\'img\' style="display:NONE" src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
   // Load the model.
   const img = document.getElementById('img');
-  console.debug("Running Predictions",img,model)
+  //console.debug("Running Predictions",img,model)
   if(model && captureTouch){
     if(img){
-        console.debug("Running Predictions")
+        //console.debug("Running Predictions")
         model.detect(img).then(predictions => {
             if(predictions){
-              console.debug('Predictions: ', predictions);
+              //console.debug('Predictions: ', predictions);
               if(predictions.length > 0){
                 audio.play();
                 storeTouch();
