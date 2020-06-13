@@ -33,9 +33,17 @@ function displayChart(label, datasets) {
   ////console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: label,
-      datasets: datasets
+    data:{
+      datasets:[
+        {
+         labels: label,
+         datasets: datasets
+       },
+       {
+        labels: label,
+        datasets: datasets
+      }
+      ]
     },
     options: opetionEyeState
   });
@@ -84,7 +92,7 @@ var optionBar = {
 function displayDigitalEyeReport(label, datasets) {
   if (digitalEyesChart) {
     //console.log('Destroy');
-    digitalEyesChart.clear();
+    digitalEyesChart.destroy();
   }
   showChart();
   var myChart = document.getElementById('myChart');
@@ -106,7 +114,7 @@ function displayDigitalEyeReport(label, datasets) {
 function displayExposureReport(label, datasets) {
   if (exposureChart) {
     //console.log('Destroy');
-    exposureChart.clear();
+    exposureChart.destroy();
   }
   var myChart = document.getElementById('exposureChart');
   var ctx = myChart.getContext('2d');
@@ -175,28 +183,14 @@ function showBlinkReport() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
-      var dataSets = [];
-      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
-      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
-      var label = [];
+
       var blinkStatePerMinute = JSON.parse(this.responseText);
       //console.log(blinkStatePerMinute);
-      var blinkReportPerMinute = [];
-      for (var attribute in blinkStatePerMinute) {
-        label.push(attribute);
-        blinkReportPerMinute.push(blinkStatePerMinute[attribute])
-      }
-      var dataset = {
-        label: labelToShow,
-        fill: false,
-        backgroundColor: "rgba(225,0,0,0.4)",
-        borderColor: "rgba(225,0,0,0.4)",
-        data: blinkReportPerMinute
-      };
-      //console.log(blinkStatePerMinute);
-
-      dataSets.push(dataset);
-      displayDigitalEyeReport(label, dataSets);
+      //2020-05-30: {22:50: 28, 22:51: 35, 22:52: 32, 22:53: 29, 23:16: 16}
+      //2020-06-06: {19:34: 3, 19:36: 1, 19:37: 4, 19:40: 28, 19:41: 10}
+      //2020-06-07: {18:43: 23, 18:44: 21, 18:48: 35, 18:49: 17}
+      //2020-06-08: {00:15: 8, 00:16: 8, 00:17: 18, 00:22: 4, 00:23: 3}
+      parseAndDisplayReport(blinkStatePerMinute,'blink');
       return this.responseText;
     }
   };
@@ -205,6 +199,70 @@ function showBlinkReport() {
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 
+
+}
+
+function parseAndDisplayReport(reportData,reportName){
+  var dataSets = [];
+  var label = [];
+  let labels  = [];
+  var blinkReportPerMinute = [];
+  let countParse = 0;
+  var color_generator_factor = Object.keys(reportData).length;
+  for (var attribute in reportData) {
+    let data_1 = reportData[attribute];
+    let data_1_report = [];
+    let labelToShow_1 = [];
+    countParse++;
+    let color_value = 255/countParse;
+    let color = "rgba("+color_value+","+10+","+color_value+",0.4)";
+    for (let date_attr in data_1){
+      let value_1 = data_1[date_attr];
+      data_1_report.push(value_1);
+      labelToShow_1.push(date_attr);
+      labels.push(date_attr);
+    }
+    let dataset_1 = {
+      label: labelToShow_1,
+      fill: false,
+      backgroundColor: color,
+      borderColor: color,
+      data: data_1_report,
+      date_value : attribute
+    };
+    labels.sort();
+    dataSets.push(dataset_1);
+  }
+  for(let i in dataSets){
+    let dataset_i = dataSets[i];
+    let count = 0;
+    let data_i_corrected  = [];
+    let data_i = dataset_i['data'];
+    let labels_i = dataset_i['label'];
+    let date_value_i = dataset_i['date_value'];
+    for(let label_index in labels){
+      let label = labels[label_index];
+      let index = -1;
+      labels_i.filter((x,i)=> {if(x == label){index=i;return true}else{return false}})
+      if(index > -1){
+        data_i_corrected.push(data_i[index]);
+      }else{
+        data_i_corrected.push(0);
+      }
+      count++;
+    }
+    dataset_i['data'] = data_i_corrected;
+    dataset_i['label'] = date_value_i;
+  }
+  if(reportName == 'blink'){
+    displayDigitalEyeReport(labels, dataSets);
+  }else if(reportName == 'exposure'){
+    displayExposureReport(labels, dataSets);
+  }else if(reportName == 'closeness'){
+    displayClosenessReport(labels, dataSets);
+  }else if(reportName == 'touch'){
+    displayTouchReport(labels, dataSets);
+  }
 
 }
 
@@ -225,28 +283,8 @@ function showExposureReport() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
-      var dataSets = [];
-      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
-      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
-      var label = [];
       var blinkStatePerMinute = JSON.parse(this.responseText);
-      //console.log(blinkStatePerMinute);
-      var blinkReportPerMinute = [];
-      for (var attribute in blinkStatePerMinute) {
-        label.push(attribute);
-        blinkReportPerMinute.push(blinkStatePerMinute[attribute])
-      }
-      var dataset = {
-        label: labelToShow,
-        fill: false,
-        backgroundColor: "rgba(225,0,0,0.4)",
-        borderColor: "rgba(225,0,0,0.4)",
-        data: blinkReportPerMinute
-      };
-      //console.log(blinkStatePerMinute);
-
-      dataSets.push(dataset);
-      displayExposureReport(label, dataSets);
+      parseAndDisplayReport(blinkStatePerMinute,'exposure');
       return this.responseText;
     }
   };
@@ -274,28 +312,8 @@ function showClosenessReport() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
-      var dataSets = [];
-      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
-      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
-      var label = [];
       var closenessData = JSON.parse(this.responseText);
-      //console.log(closenessData);
-      var closenessReportPerMinute = [];
-      for (var attribute in closenessData) {
-        label.push(attribute);
-        closenessReportPerMinute.push(closenessData[attribute])
-      }
-      var dataset = {
-        label: labelToShow,
-        fill: false,
-        backgroundColor: "rgba(225,0,0,0.4)",
-        borderColor: "rgba(225,0,0,0.4)",
-        data: closenessReportPerMinute
-      };
-      //console.log(closenessReportPerMinute);
-
-      dataSets.push(dataset);
-      displayClosenessReport(label, dataSets);
+      parseAndDisplayReport(closenessData,'closeness');
       return this.responseText;
     }
   };
@@ -321,28 +339,8 @@ function showTouchReport() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
-      var dataSets = [];
-      var backgroundColor_open = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'];
-      var borderColor = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'];
-      var label = [];
       var touchData = JSON.parse(this.responseText);
-      //console.log(touchData);
-      var touchReportPerMinute = [];
-      for (var attribute in touchData) {
-        label.push(attribute);
-        touchReportPerMinute.push(touchData[attribute])
-      }
-      var dataset = {
-        label: labelToShow,
-        fill: false,
-        backgroundColor: "rgba(225,0,0,0.4)",
-        borderColor: "rgba(225,0,0,0.4)",
-        data: touchReportPerMinute
-      };
-      //console.log(touchReportPerMinute);
-
-      dataSets.push(dataset);
-      displayTouchReport(label, dataSets);
+      parseAndDisplayReport(touchData,'touch');
       return this.responseText;
     }
   };
