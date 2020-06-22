@@ -15,10 +15,8 @@ const modelParams = {
 
 let model;
 
-var audio = document.getElementById('audio');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-//console.log(audio,canvas,context);
 
 loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
   //console.log('Model Loaded');
@@ -46,10 +44,8 @@ function take_snapshot() {
             if(predictions){
               //console.debug('Predictions: ', predictions);
               if(predictions.length > 0){
-                audio.play();
+                console.log('Notification : '+ 'Please avoid touching face !!')
                 storeTouch();
-              }else{
-                audio.pause();
               }
             }
           });
