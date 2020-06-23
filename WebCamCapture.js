@@ -14,6 +14,7 @@ const modelParams = {
 };
 
 let model;
+let lastNotificationDate;
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
@@ -41,9 +42,19 @@ function take_snapshot() {
     if(img){
         //console.debug("Running Predictions")
         model.detect(img).then(predictions => {
-            if(predictions){
+          let showNotification = true;
+            if(lastNotificationDate){
+              let diffMs = (new Date() - lastNotificationDate);
+              let diffSeconds = Math.round(diffMs / 1000);
+              if(diffSeconds < 10){
+                showNotification = false;
+                console.log(diffSeconds,showNotification);
+              }
+            }
+            if(predictions && showNotification){
               //console.debug('Predictions: ', predictions);
               if(predictions.length > 0){
+                lastNotificationDate = new Date();
                 console.log('Notification : '+ 'Please avoid touching face !!')
                 storeTouch();
               }
