@@ -33,51 +33,142 @@ function displayChart(label, datasets) {
   ////console.log("List Blink Stat",lbs);
   digitalEyesChart = new Chart(ctx, {
     type: 'line',
-    data:{
-      datasets:[
+    data: {
+      datasets: [
         {
-         labels: label,
-         datasets: datasets
-       },
-       {
-        labels: label,
-        datasets: datasets
-      }
+          labels: label,
+          datasets: datasets
+        },
+        {
+          labels: label,
+          datasets: datasets
+        }
       ]
     },
     options: opetionEyeState
   });
   //console.log("charting is done");
 }
+function convertFormArrayToObj(formArray) {
+
+  var returnArray = {};
+  for (var i = 0; i < formArray.length; i++) {
+    returnArray[formArray[i]['name']] = formArray[i]['value'];
+  }
+  return returnArray;
+}
+
+function fetchSettings(){
+  var url = "http://localhost:8080/fetch_settings";
+
+    $.ajax({
+      url: url,
+      type: 'json',
+      method: 'get',
+    })
+      .done(function (data) {
+        console.log('Got '+data);
+        if(data){
+          for(var key in data){
+            var value = data[key];
+            $('#'+key).val(value);
+          }
+        }
+      });
+}
+
+$(document).ready(function () {
+  fetchSettings();
+  $('#tryLongBreak').click(function(){
+    var url = "http://localhost:8080/try_long_break";
+
+    $.ajax({
+      url: url,
+      type: 'json',
+      method: 'get',
+    })
+      .done(function (data) {
+        console.log('Got '+data);
+        
+      });
+  });
+  $('#tryShortBreak').click(function(){
+    var url = "http://localhost:8080/try_short_break";
+
+    $.ajax({
+      url: url,
+      type: 'json',
+      method: 'get',
+    })
+      .done(function (data) {
+        console.log('Got '+data);
+        
+      });
+  });
+  $('#tryBlinkNotification').click(function(){
+    var url = "http://localhost:8080/try_blink_notification";
+
+    $.ajax({
+      url: url,
+      type: 'json',
+      method: 'get',
+    })
+      .done(function (data) {
+        console.log('Got '+data);
+        
+      });
+  });
+  $("#settingsForm").submit(function (event) {
+    event.preventDefault();
+    $('#settingsSaveBtn').attr("disabled","true");
+   
+    var formArray = $('#settingsForm').serializeArray();
+    var formObj = convertFormArrayToObj(formArray);
+    console.log(formObj);
+    var url = $("#settingsForm").attr('action');
+
+    $.ajax({
+      url: url,
+      type: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(formObj),
+      method: 'post',
+    })
+      .done(function (data) {
+        $('#settingsSaveBtn').removeAttr("disabled");
+        bootbox.alert("Settings has been updated!");
+      });
+  });
+});
 
 function displayExposureChart(label, datasets) {
-  showExposureChart();
-  var myChart = document.getElementById('exposureChart');
-  var ctx = myChart.getContext('2d');
-  var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
-  //console.log("Data", datasets);
-  ////console.log("List Blink Stat",lbs);
-  exposureChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: label,
-      datasets: datasets
-    },
-    options: opetionEyeState
-  });
-  //console.log("charting is done");
-}
+    showExposureChart();
+    var myChart = document.getElementById('exposureChart');
+    var ctx = myChart.getContext('2d');
+    var timeFormat = 'YYYY-MM-DDTHH:mm:ss.SSS';
+    //console.log("Data", datasets);
+    ////console.log("List Blink Stat",lbs);
+    exposureChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: label,
+        datasets: datasets
+      },
+      options: opetionEyeState
+    });
+    //console.log("charting is done");
+  }
 
 function hideyChart() {
-  reportContainer = document.getElementById('reportContainer');
-  reportContainer.style.display = 'NONE';
-  //console.log(reportContainer);
-}
+    reportContainer = document.getElementById('reportContainer');
+    reportContainer.style.display = 'NONE';
+    //console.log(reportContainer);
+  }
 
 function showChart() {
-  reportContainer = document.getElementById('reportContainer');
-  myChart = document.getElementById('myChart');
-}
+    reportContainer = document.getElementById('reportContainer');
+    myChart = document.getElementById('myChart');
+  }
 
 var optionBar = {
   scales: {
@@ -190,7 +281,7 @@ function showBlinkReport() {
       //2020-06-06: {19:34: 3, 19:36: 1, 19:37: 4, 19:40: 28, 19:41: 10}
       //2020-06-07: {18:43: 23, 18:44: 21, 18:48: 35, 18:49: 17}
       //2020-06-08: {00:15: 8, 00:16: 8, 00:17: 18, 00:22: 4, 00:23: 3}
-      parseAndDisplayReport(blinkStatePerMinute,'blink');
+      parseAndDisplayReport(blinkStatePerMinute, 'blink');
       return this.responseText;
     }
   };
@@ -202,10 +293,10 @@ function showBlinkReport() {
 
 }
 
-function parseAndDisplayReport(reportData,reportName){
+function parseAndDisplayReport(reportData, reportName) {
   var dataSets = [];
   var label = [];
-  let labels  = [];
+  let labels = [];
   var blinkReportPerMinute = [];
   let countParse = 0;
   var color_generator_factor = Object.keys(reportData).length;
@@ -214,9 +305,9 @@ function parseAndDisplayReport(reportData,reportName){
     let data_1_report = [];
     let labelToShow_1 = [];
     countParse++;
-    let color_value = 255/countParse;
-    let color = "rgba("+color_value+","+10+","+color_value+",0.4)";
-    for (let date_attr in data_1){
+    let color_value = 255 / countParse;
+    let color = "rgba(" + color_value + "," + 10 + "," + color_value + ",0.4)";
+    for (let date_attr in data_1) {
       let value_1 = data_1[date_attr];
       data_1_report.push(value_1);
       labelToShow_1.push(date_attr);
@@ -228,25 +319,25 @@ function parseAndDisplayReport(reportData,reportName){
       backgroundColor: color,
       borderColor: color,
       data: data_1_report,
-      date_value : attribute
+      date_value: attribute
     };
     labels.sort();
     dataSets.push(dataset_1);
   }
-  for(let i in dataSets){
+  for (let i in dataSets) {
     let dataset_i = dataSets[i];
     let count = 0;
-    let data_i_corrected  = [];
+    let data_i_corrected = [];
     let data_i = dataset_i['data'];
     let labels_i = dataset_i['label'];
     let date_value_i = dataset_i['date_value'];
-    for(let label_index in labels){
+    for (let label_index in labels) {
       let label = labels[label_index];
       let index = -1;
-      labels_i.filter((x,i)=> {if(x == label){index=i;return true}else{return false}})
-      if(index > -1){
+      labels_i.filter((x, i) => { if (x == label) { index = i; return true } else { return false } })
+      if (index > -1) {
         data_i_corrected.push(data_i[index]);
-      }else{
+      } else {
         data_i_corrected.push(0);
       }
       count++;
@@ -254,13 +345,13 @@ function parseAndDisplayReport(reportData,reportName){
     dataset_i['data'] = data_i_corrected;
     dataset_i['label'] = date_value_i;
   }
-  if(reportName == 'blink'){
+  if (reportName == 'blink') {
     displayDigitalEyeReport(labels, dataSets);
-  }else if(reportName == 'exposure'){
+  } else if (reportName == 'exposure') {
     displayExposureReport(labels, dataSets);
-  }else if(reportName == 'closeness'){
+  } else if (reportName == 'closeness') {
     displayClosenessReport(labels, dataSets);
-  }else if(reportName == 'touch'){
+  } else if (reportName == 'touch') {
     displayTouchReport(labels, dataSets);
   }
 
@@ -284,7 +375,7 @@ function showExposureReport() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
       var blinkStatePerMinute = JSON.parse(this.responseText);
-      parseAndDisplayReport(blinkStatePerMinute,'exposure');
+      parseAndDisplayReport(blinkStatePerMinute, 'exposure');
       return this.responseText;
     }
   };
@@ -313,7 +404,7 @@ function showClosenessReport() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
       var closenessData = JSON.parse(this.responseText);
-      parseAndDisplayReport(closenessData,'closeness');
+      parseAndDisplayReport(closenessData, 'closeness');
       return this.responseText;
     }
   };
@@ -340,7 +431,7 @@ function showTouchReport() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       showChart();
       var touchData = JSON.parse(this.responseText);
-      parseAndDisplayReport(touchData,'touch');
+      parseAndDisplayReport(touchData, 'touch');
       return this.responseText;
     }
   };
@@ -349,13 +440,13 @@ function showTouchReport() {
   let groupByJson = JSON.stringify({ "groupBy": groupBy });
   xhr.send(groupByJson);
 }
-$(document).ready(function(){
-  setTimeout(function(){
+$(document).ready(function () {
+  setTimeout(function () {
     $('#animContainer').remove();
-  },8000);
+  }, 8000);
   lastOpenElem = $('#homeButton');
-  $('a[data-toggle="tab"]').click(function(){
-    if(lastOpenElem){
+  $('a[data-toggle="tab"]').click(function () {
+    if (lastOpenElem) {
       lastOpenElem.removeClass("active");
     }
     lastOpenElem = $(this);

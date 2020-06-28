@@ -70,6 +70,17 @@ div.popover-container p {
     width: 100%;
   }
 }
+.padding-top-5{
+  padding-top: 5px;
+}
+.mpr-0{
+  margin-right: 0;
+  padding-right: 0;
+}
+.icon-img{
+  width: 45px;
+  margin-right: 10px;
+}
 
 
 

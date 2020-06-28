@@ -11,8 +11,7 @@
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -24,6 +23,7 @@
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"> </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 </head>
 
 <body>
@@ -58,14 +58,14 @@
 
         <ul class="nav flex-column mt-2">
           <li class="nav-item nav-tabs">
-            <a data-toggle="tab" class="nav-link active" id="homeButton" href="#home">Home</a>
+            <a data-toggle="tab" class="nav-link active" id="homeButton" href="#home"><span><img class="icon-img" src="images/home.png" alt=""></span> Home</a>
           </li>
           <li class="nav-item nav-tabs">
-            <a id="monitorBlink" data-toggle="tab" class="nav-link" href="#cameraViewer">Dashboard</a>
+            <a id="monitorBlink" data-toggle="tab" class="nav-link" href="#cameraViewer"><span><img class="icon-img" src="images/features.png" alt=""></span> Dashboard</a>
           </li>
           <li class="nav-item nav-tabs">
             <a id="reportsButton" data-toggle="collapse" data-target="#submenu"
-              class="nav-link nav-link-dropdown collapsed" href="#">Reports</a>
+              class="nav-link nav-link-dropdown collapsed" href="#"><span><img class="icon-img" src="images/reports.png" alt=""></span> Reports</a>
             <div class="collapse" id="submenu" aria-expanded="false">
               <ul class="flex-column pl-2 nav">
                 <li class="nav-item">
@@ -90,7 +90,7 @@
 
           <li class="nav-item nav-tabs">
             <a id="eyeExcercisesButton" data-toggle="collapse" data-target="#excersisesmenu"
-              class="nav-link nav-link-dropdown collapsed" href="#">Eye Excercises</a>
+              class="nav-link nav-link-dropdown collapsed" href="#"><span><img class="icon-img" src="images/eye_excercises.png" alt=""></span> Eye Excercises</a>
             <div class="collapse" id="excersisesmenu" aria-expanded="false">
               <ul class="flex-column pl-2 nav">
                 <li class="nav-item">
@@ -110,11 +110,11 @@
           </li>
 
           <li class="nav-item nav-tabs">
-            <a id="comingsoonbutton" data-toggle="tab" class="nav-link" href="#comingsoon">Coming Soon...</a>
+            <a id="comingsoonbutton" data-toggle="tab" class="nav-link" href="#comingsoon"><span><img class="icon-img" src="images/upcoming.png" alt=""></span> Coming Soon...</a>
           </li>
 
           <li class="nav-item nav-tabs">
-            <a id="setting" data-toggle="tab" class="nav-link" href="#settings">Settings</a>
+            <a id="setting" data-toggle="tab" class="nav-link" href="#settings"><span><img class="icon-img" src="images/settings.png" alt=""></span> Settings</a>
           </li>
         </ul>
 
@@ -367,7 +367,7 @@
                       </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                       <div class="col">
 
                             <div class="card" style="width: 100%;">
@@ -387,7 +387,7 @@
 
                           </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-md-6 col-xs-12" style="margin: 10px auto;">
 
@@ -536,73 +536,255 @@
 
           </div>
           <div id="settings" class="tab-pane">
-            <div class="card height-100 " style="width: 100%;">
-
-
-
+            <div class="card" style="width: 100%;">
               <div class="card-body">
-                <div class="row align-items-center text-center">
-
+                <div class="row align-items-center text-left mt-2">
                   <div class="col">
                     <div class="heading"><b>Settings</b></div>
-                    <div class="slidecontainer mt-2 col">
-                      <div>
-                        <b>Touch Senstivity Precision :</b>
-                        <input class="bar" onchange="senstivityUpdate()" type="range" min="1" max="100" value="80"
-                          class="slider" id="senstivity">
-                      </div>
-
-                    </div>
-                    <div class="mt-2 col">
+                  <form id="settingsForm" class="form col-md-12" action="http://localhost:8080/store_settings" method="POST" >
+                    <div class="form-group">
                       <div class="form-group">
-                        <label for="sel1">Blink Report Grouping :</label>
-                        <select name="blinkReportGropSetting" id="blinkReportGropSetting">
-                          <option value="minute">Minute</option>
-                          <option value="hour">Hour</option>
-                          <option value="day">Day</option>
+                        <div class="col-12 row">                      
+                          <label for="" class="col-sm-6 col-form-label">Touch senstivity level</label>
+                        <div class="col-sm-6">
+                          <input class="bar form-control" name="senstivity" onchange="senstivityUpdate()" type="range" min="1" max="100" value="80"
+                            class="slider" id="senstivity">
+                            </div>
+                            </div>
+                       
+  
+                    
+                    </div>
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Blink Report Grouping </label>
+                      <div class="col-sm-6">
+                      <select class="form-control" name="blinkReportGropSetting" id="blinkReportGropSetting">
+                        <option value="minute">Minute</option>
+                        <option value="hour">Hour</option>
+                        <option value="day">Day</option>
+                      </select>
+                      </div>
+                      </div>
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Exposure Report Grouping </label>
+                      <div class="col-sm-6">
+                      <select name="exposureReportGropSetting" class="form-control" id="exposureReportGropSetting">
+                        <option value="minute">Minute</option>
+                        <option value="hour">Hour</option>
+                        <option value="day">Day</option>
+                      </select>
+                      </div>
+                    </div>
+
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Closeness Report Grouping </label>
+                      <div class="col-sm-6">
+                      <select class="form-control" name="closenessReportGropSetting" id="closenessReportGropSetting">
+                        <option value="minute">Minute</option>
+                        <option value="hour">Hour</option>
+                        <option value="day">Day</option>
+                      </select>
+                      </div>
+                      </div>
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Touch Report Grouping </label>
+                      <div class="col-sm-6">
+                      <select class="form-control" name="touchReportGropSetting" id="touchReportGropSetting">
+                        <option value="minute">Minute</option>
+                        <option value="hour">Hour</option>
+                        <option value="day">Day</option>
+                      </select>
+                      </div>
+                      </div>
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Take a long break every </label>
+                      <div class="col-sm-6 mpr-0">
+                        <div class="col-12 row mpr-0">  
+                        <select class="form-control col-5" name="long_break_every" id="longBreakEvery">
+                          <option value="30">30 Minutes</option>
+                          <option value="60">60 Minutes</option>
+                          <option value="90">90 Minutes</option>
+                        </select>
+                        <label class="col-2 text-center padding-top-5"  for="">For</label>
+                        <select class="form-control col-5" name="long_break_for" id="longBreakFor">
+                          <option value="2">2 Minutes</option>
+                          <option value="3">3 Minutes</option>
+                          <option value="5">5 Minutes</option>
+                          <option value="7">7 Minutes</option>
+                          <option value="10">10 Minutes</option>
+                        </select>
+                        </div>
+                      </div>
+                      </div>
+                      
+                      
+                    
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Notify me about a long break coming in</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="long_break_notify" id="longBreakNotify">
+                          <option value="1">1 Minute</option>
+                          <option value="2">2 Minutes</option>
                         </select>
                       </div>
-
+                      </div>
+                      
+                      
+                    
                     </div>
-                    <div class="mt-2 col">
-                      <div class="form-group">
-                        <label for="sel2">Exposure Report Grouping :</label>
-                        <select name="exposureReportGropSetting" id="exposureReportGropSetting">
-                          <option value="minute">Minute</option>
-                          <option value="hour">Hour</option>
-                          <option value="day">Day</option>
+
+                  
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Take a short break every</label>
+                      <div class="col-sm-6 mpr-0">
+                        <div class="col-12 row mpr-0">  
+                        <select class="form-control col-5" name="short_break_every" id="shortBreakEvery">
+                          <option value="5">5 Minutes</option>
+                          <option value="10">10 Minutes</option>
+                          <option value="15">15 Minutes</option>
+                          <option value="20">15 Minutes</option>
+                        </select>
+                        <label class="col-2 text-center padding-top-5"  for="">For</label>
+
+                        <select class="form-control col-5" name="short_break_for" id="shortBreakFor">
+                          <option value="8">8 Seconds</option>
+                          <option value="10">10 Seconds</option>
+                          <option value="15">15 Seconds</option>
+                        </select>
+                        </div>
+                      </div>
+                      </div>
+                      
+                      
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                      <div class="col-sm-6">
+                        <a id="tryLongBreak" href="#" class="btn btn-info">Try Long Break</a>
+                        <a id="tryShortBreak" href="#" class="btn btn-info">Try Short Break</a>
+                        <a id="tryBlinkNotification" href="#" class="btn btn-info">Try Blink Notification</a>
+                      </div>
+                      </div>
+                      
+                      
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Lock my system after</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="lock_system_after" id="lock_system_after">
+                          <option value="5">5 Minutes</option>
+                          <option value="10">10 Minutes</option>
+                          <option value="30">30 Minutes</option>
+                          <option value="60">1 Hour</option>
                         </select>
                       </div>
-
+                      </div>
+                      
+                      
+                    
                     </div>
-                    <div class="mt-2 col">
-                      <div class="form-group">
-                        <label for="sel3">Closeness Report Grouping :</label>
-                        <select name="closenessReportGropSetting" id="closenessReportGropSetting">
-                          <option value="minute">Minute</option>
-                          <option value="hour">Hour</option>
-                          <option value="day">Day</option>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Blink rate notification frequency</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="blink_rate_notification_frequency" id="blink_rate_notification_frequency">
+                          <option value="30">30 Minutes</option>
+                          <option value="60">1 Hours</option>
+                          <option value="120">2 Hours</option>
+                      
                         </select>
                       </div>
-
+                      </div>
+                      
+                      
+                    
                     </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="sel4">Touch Report Grouping :</label>
-                        <select name="touchReportGropSetting" id="touchReportGropSetting">
-                          <option value="minute">Minute</option>
-                          <option value="hour">Hour</option>
-                          <option value="day">Day</option>
+
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Notify When the User’s Eye are RED</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="enable_eye_redness" id="enable_eye_redness">
+                          <option value="enable">Enabled</option>
+                          <option value="disabled">Disabled</option>
                         </select>
                       </div>
+                      </div>
+                      
+                      
+                    
                     </div>
-                    <div class="col">
-                      <div class="form-group">
-                        <label for="sel4">Force Lock</label>
-                        <input id="forceLockSetting" type="text">
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Notify when User Touches face. Play Siren.</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="enable_face_touch" id="enable_face_touch">
+                          <option value="enable">Enabled</option>
+                          <option value="disabled">Disabled</option>
+                        </select>
+                      </div>
+                      </div>
+                      
+                      
+                    
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Notify When the user is close to Digital Screen </label>
+                      <div class="col-sm-6">
+                        <select class="form-control" name="enable_screen_closeness" id="enable_screen_closeness">
+                          <option value="enable">Enabled</option>
+                          <option value="disabled">Disabled</option>
+                        </select>
+                      </div>
+                      </div>
+                      
+                      
+                    
+                    </div>
+
+
+
+                    <div class="form-group">
+                      <div class="col-sm-10">
+                        <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
                       </div>
                     </div>
                   </div>
+                </form>
                 </div>
 
               </div>
