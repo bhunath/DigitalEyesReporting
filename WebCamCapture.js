@@ -49,7 +49,7 @@ function take_snapshot() {
                 if(lastNotificationDate){
                   let diffMs = (new Date() - lastNotificationDate);
                   let diffSeconds = Math.round(diffMs / 1000);
-                  if(diffSeconds < 5){
+                  if(diffSeconds < 10){
                     showNotification = false;
                   }
                 }
