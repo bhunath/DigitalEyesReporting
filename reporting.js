@@ -156,7 +156,7 @@ function displayTouchReport(label, datasets) {
   //console.log("Data", datasets);
   ////console.log("List Blink Stat",lbs);
   let touchChart = new Chart(touchChartCanvasCtx, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: label,
       datasets: datasets
