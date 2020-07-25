@@ -261,9 +261,6 @@
                         Personalized Notification(user allowed to choose customized Pic and message for alerts)
                       </li>
                       <li>
-                        Full Screen Lock(Forced lock based on User setting)
-                      </li>
-                      <li>
                         Creating consolidated user report which can shared with the eye expert
                       </li>
                       <li>
@@ -544,19 +541,19 @@
                   <form id="settingsForm" class="form col-md-12" action="http://localhost:8080/store_settings" method="POST" >
                     <div class="form-group">
                       <div class="form-group">
-                        <div class="col-12 row">
+                        <div class="col-12 row">                      
                           <label for="" class="col-sm-6 col-form-label">Touch senstivity level</label>
                         <div class="col-sm-6">
                           <input class="bar form-control" name="senstivity" onchange="senstivityUpdate()" type="range" min="1" max="100" value="80"
                             class="slider" id="senstivity">
                             </div>
                             </div>
-
-
-
+                       
+  
+                    
                     </div>
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Blink Report Grouping </label>
                       <div class="col-sm-6">
                       <select class="form-control" name="blinkReportGropSetting" id="blinkReportGropSetting">
@@ -566,11 +563,11 @@
                       </select>
                       </div>
                       </div>
-
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Exposure Report Grouping </label>
                       <div class="col-sm-6">
                       <select name="exposureReportGropSetting" class="form-control" id="exposureReportGropSetting">
@@ -581,11 +578,11 @@
                       </div>
                     </div>
 
-
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Closeness Report Grouping </label>
                       <div class="col-sm-6">
                       <select class="form-control" name="closenessReportGropSetting" id="closenessReportGropSetting">
@@ -595,11 +592,11 @@
                       </select>
                       </div>
                       </div>
-
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Touch Report Grouping </label>
                       <div class="col-sm-6">
                       <select class="form-control" name="touchReportGropSetting" id="touchReportGropSetting">
@@ -609,14 +606,14 @@
                       </select>
                       </div>
                       </div>
-
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Take a long break every </label>
                       <div class="col-sm-6 mpr-0">
-                        <div class="col-12 row mpr-0">
+                        <div class="col-12 row mpr-0">  
                         <select class="form-control col-5" name="long_break_every" id="longBreakEvery">
                           <option value="30">30 Minutes</option>
                           <option value="60">60 Minutes</option>
@@ -633,15 +630,15 @@
                         </div>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
-
+                    
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Notify me about a long break coming in</label>
                       <div class="col-sm-6">
                         <select class="form-control" name="long_break_notify" id="longBreakNotify">
@@ -650,18 +647,18 @@
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
-
+                  
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Take a short break every</label>
                       <div class="col-sm-6 mpr-0">
-                        <div class="col-12 row mpr-0">
+                        <div class="col-12 row mpr-0">  
                         <select class="form-control col-5" name="short_break_every" id="shortBreakEvery">
                           <option value="5">5 Minutes</option>
                           <option value="10">10 Minutes</option>
@@ -678,29 +675,30 @@
                         </div>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                       <div class="col-sm-6">
                         <a id="tryLongBreak" href="#" class="btn btn-info">Try Long Break</a>
                         <a id="tryShortBreak" href="#" class="btn btn-info">Try Short Break</a>
                         <a id="tryBlinkNotification" href="#" class="btn btn-info">Try Blink Notification</a>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Lock my system after</label>
                       <div class="col-sm-6">
                         <select class="form-control" name="lock_system_after" id="lock_system_after">
+                          <option value="">Disabled</option>
                           <option value="5">5 Minutes</option>
                           <option value="10">10 Minutes</option>
                           <option value="30">30 Minutes</option>
@@ -708,31 +706,31 @@
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Blink rate notification frequency</label>
                       <div class="col-sm-6">
                         <select class="form-control" name="blink_rate_notification_frequency" id="blink_rate_notification_frequency">
                           <option value="30">30 Minutes</option>
                           <option value="60">1 Hours</option>
                           <option value="120">2 Hours</option>
-
+                      
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Notify When the User’s Eye are RED</label>
                       <div class="col-sm-6">
                         <select class="form-control" name="enable_eye_redness" id="enable_eye_redness">
@@ -741,14 +739,14 @@
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
-                        <label for="" class="col-sm-6 col-form-label">Notify when User Touches face. Play Siren.</label>
+                      <div class="col-12 row">                      
+                        <label for="" class="col-sm-6 col-form-label">Notify when User Touches face.</label>
                       <div class="col-sm-6">
                         <select class="form-control" name="enable_face_touch" id="enable_face_touch">
                           <option value="enable">Enabled</option>
@@ -756,13 +754,13 @@
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
                     <div class="form-group">
-                      <div class="col-12 row">
+                      <div class="col-12 row">                      
                         <label for="" class="col-sm-6 col-form-label">Notify When the user is close to Digital Screen </label>
                       <div class="col-sm-6">
                         <select class="form-control" name="enable_screen_closeness" id="enable_screen_closeness">
@@ -771,9 +769,9 @@
                         </select>
                       </div>
                       </div>
-
-
-
+                      
+                      
+                    
                     </div>
 
 
@@ -809,7 +807,7 @@
 
 
   </div>
-  <video id="my_video" style="display:none"></video>
+
   <script type="text/javascript">
 
     window.onload = function () {
@@ -820,7 +818,6 @@
         jpeg_quality: 90
       });
       Webcam.attach('#my_camera');
-      Webcam.attach('#my_video');
     }
   </script>
   <script src="WebCamCapture.js" charset="utf-8"></script>
