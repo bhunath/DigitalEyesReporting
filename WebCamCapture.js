@@ -1,4 +1,5 @@
 var take_snapshot_interval;
+var track_hand_interval;
 let captureBlink = false;
 let captureCloseness=false;
 let captureRedEye=false;
@@ -18,11 +19,38 @@ let lastNotificationDate;
 
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-
+const video = document.getElementById('my_video');
+handTrack.startVideo(video).then(status => {
+  if(status){
+    console.log("Video is attached with HandTrack");
+  }
+});
 loadedHandtrack = handTrack.load(modelParams).then(lmodel=>{
   //console.log('Model Loaded');
   model = lmodel;
 });
+
+function trackHand(){
+
+  if(model && captureTouch){
+    if(Webcam){
+      console.debug("Running Predictions")
+      model.detect(video).then(predictions => {
+      if(predictions){
+          if(predictions.length > 0){
+            let showNotification = true;
+            if(showNotification){
+              console.log(predictions);
+              lastNotificationDate = new Date();
+              console.log('Notification : '+ 'Please avoid touching face !!')
+              storeTouch();
+            }
+          }
+        }
+      });
+    }
+  }
+}
 
 
 function take_snapshot() {
@@ -37,33 +65,6 @@ function take_snapshot() {
   '<img id=\'img\' style="display:NONE" src="'+data_uri+'" width=\'400px\' height=\'350px\'/>';
   // Load the model.
   const img = document.getElementById('img');
-  //console.debug("Running Predictions",img,model)
-  if(model && captureTouch){
-    if(img){
-        //console.debug("Running Predictions")
-        model.detect(img).then(predictions => {
-          if(predictions){
-              if(predictions.length > 0){
-                let showNotification = true;
-                //console.debug('Predictions: ', predictions);
-                if(lastNotificationDate){
-                  let diffMs = (new Date() - lastNotificationDate);
-                  let diffSeconds = Math.round(diffMs / 1000);
-                  if(diffSeconds < 10){
-                    showNotification = false;
-                  }
-                }
-                if(showNotification){
-                  console.log(predictions);
-                  lastNotificationDate = new Date();
-                  console.log('Notification : '+ 'Please avoid touching face !!')
-                  storeTouch();
-                }
-              }
-            }
-          });
-        }
-      }
   });
 }
 
@@ -254,8 +255,8 @@ function monitorBlink(){
  }
 
  function monitorTouch(){
-   if(!take_snapshot_interval){
-     take_snapshot_interval = setInterval(take_snapshot,100);
+   if(!track_hand_interval){
+     track_hand_interval = setInterval(trackHand,1000);
    }
    var monitorTouchButton = document.getElementById('btnMonitorTouch');
    var monitorTouchStatus = document.getElementById('touchMonitorStatus');
@@ -271,7 +272,7 @@ function monitorBlink(){
      //console.log('Stop is Called')
      monitorTouchButton.innerHTML = 'Start';
      monitorTouchStatus.innerHTML = 'Stopped'
-     //clearInterval(take_snapshot_interval);
+     clearInterval(track_hand_interval);
      // Creating a XHR object
    }
  }
